@@ -24,21 +24,23 @@
 # define PUT8 ft_putstr("There\n");
 # define PUT9 ft_putstr("There\n");
 
-# define HGT 600
-# define WDT 800
+# define HGT 720
+# define WDT 1280
 # define KEY_PRESS 2
 # define KEY_PRESS_MASK (1L<<0)
-# define ITER_BASE 300
+# define ITER_BASE 10
 
 # define MANDELBROT 2
 
 # include "../libft/libft.h"
 # include "mlx.h"
 # include <stdbool.h>
+# include <pthread.h>
 
 typedef struct	s_fract
 {
 	double		MinRe;
+	double 		MaxIm;
 	double		MinIm;
 	double 		c_im;
 	double 		c_re;
@@ -46,7 +48,6 @@ typedef struct	s_fract
 	double 		z_re2;
 	double 		z_im;
 	double 		z_im2;
-	double 		MaxIm;
 	double 		Re_factor;
 	double 		Im_factor;
 	unsigned 	MaxIterations;

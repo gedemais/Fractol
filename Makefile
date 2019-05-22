@@ -18,10 +18,10 @@ OFLAGS = -O1 -O2 -O3 -Ofast -march=native
 
 INC = includes/fractol.h
 
-SRCS_NAME = main.c\
-			mandelbrot.c\
-			mlx_fts_1.c\
-			parsing.c
+SRCS_NAME = 	main.c\
+		mandelbrot.c\
+		mlx_fts_1.c\
+		parsing.c
 
 SRCS_PATH = srcs/
 
@@ -37,7 +37,7 @@ all : $(NAME)
 
 $(NAME) : $(INC) $(LIB) $(SRCS)
 	@echo "Making $(RED)fractol_du_sale...$(DEF)"
-	$(CC) $(FLAGS) -o $(NAME) -I /usr/local/include/ $(SRCS) -L /usr/local/lib/ -lmlx -framework OpenGL -framework AppKit $(LIB)
+	$(CC) $(FLAGS) -o $(NAME) -I minilibx_macos/ $(SRCS) -L minilibx_macos/ minilibx_macos/libmlx.a -framework OpenGL -framework AppKit -lpthread $(LIB)
 	@echo "$(GRE)Done !$(DEF)"
 
 $(LIB) :

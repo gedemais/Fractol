@@ -13,6 +13,11 @@
 #include "../includes/fractol.h"
 #include "stdio.h"
 
+int	ft_exit(void)
+{
+	exit(EXIT_SUCCESS);
+}
+
 char	*ft_clear_image(void *param)
 {
 	ft_memset(((t_mlx*)param)->img_data, 0, HGT * WDT * 4);
@@ -20,19 +25,22 @@ char	*ft_clear_image(void *param)
 	return (((t_mlx*)param)->img_data);
 }
 
-void	ft_arrows(void *param, int key)
+void	ft_arrows(void *param, int key, double scale)
 {
 	if (key == 123)
-		((t_mlx*)param)->draw.MinRe -= 0.1;
+		((t_mlx*)param)->draw.MinRe += 0.01;
 	else if (key == 124)
-		((t_mlx*)param)->draw.MinRe += 0.1;
-//	else if (key == 125)
-//	else if (key == 126)
+		((t_mlx*)param)->draw.MinRe-= 0.01;
+	else if (key == 125)
+		((t_mlx*)param)->draw.MinIm += 0.01;
+	else if (key == 126)
+		((t_mlx*)param)->draw.MinIm -= 0.01;
 }
 
 int		ft_deal_key(int key, void *param)
 {
 	static int	x = 100;
+	static double	scale = 1;
 
 	x++;
 	(void)key;
@@ -41,10 +49,21 @@ int		ft_deal_key(int key, void *param)
 	else if (key == 78)
 		((t_mlx*)param)->zoom += 0.1;
 	else if (key == 123 || key == 124 || key == 125 || key == 126)
-		ft_arrows(param, key);
+		ft_arrows(param, key, scale);
+	else if (key == 53)
+		ft_exit();
+	else if (key == 34)
+		((t_mlx*)param)->draw.MaxIterations++;
+	else if (key == 6)
+		((t_mlx*)param)->zoom += 0.1;
+	else if (key == 7)
+		((t_mlx*)param)->zoom -= 0.1;
+	printf("Key = %d\nIterations = %d\n", key, ((t_mlx*)param)->draw.MaxIterations);
+	printf("MinRe = %f\nMinIm = %f\n", ((t_mlx*)param)->draw.MinRe, ((t_mlx*)param)->draw.MinIm);
 	((t_mlx*)param)->img_data = ft_clear_image(param);
 	((t_mlx*)param)->img_data = ft_mandelbrot(((t_mlx*)param)->img_data, ((t_mlx*)param)->zoom, &((t_mlx*)param)->draw);
 	mlx_put_image_to_window((t_mlx*)param, ((t_mlx*)param)->mlx_win, ((t_mlx*)param)->img_ptr, 0, 0);
+	scale /= 1.5;
 	return (1);
 }
 
@@ -64,9 +83,9 @@ int		ft_fractol(char *name)
 	if (!(env.img_data = mlx_get_data_addr(env.img_ptr, &env.bpp,
 				&env.s_l, &env.endian)))
 		return (-1);
-	env.zoom = 1;
+	env.zoom = 2.2;
 	env.draw.MinRe = -1.5;
-	env.draw.MinIm = -1.1;
+	env.draw.MinIm = -1.025;
 	mlx_put_image_to_window(&env, env.mlx_win, env.img_ptr, 0, 0);
 	mlx_hook(env.mlx_win, KEY_PRESS, KEY_PRESS_MASK, ft_deal_key, &env);
 	mlx_loop(env.mlx_ptr);
