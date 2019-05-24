@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/20 18:50:23 by gedemais          #+#    #+#             */
-/*   Updated: 2019/05/22 20:53:49 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/05/24 20:25:03 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,32 +28,67 @@
 # define WDT 1280
 # define KEY_PRESS 2
 # define KEY_PRESS_MASK (1L<<0)
-# define ITER_BASE 10
+# define ITER_BASE 30
 
 # define MANDELBROT 2
+# define NB_PALETTES 3
+
+# define NB_THREADS 8
 
 # include "../libft/libft.h"
 # include "mlx.h"
 # include <stdbool.h>
 # include <pthread.h>
 
+typedef struct	s_multi
+{
+	pthread_t	thread;
+	int			index;
+	char		*img;
+	double		MaxRe;
+	double		MinRe;
+	double 		MaxIm;
+	double		MinIm;
+	double 		c_im;
+	double 		c_re;
+	double 		z_re;
+	double 		z_re2;
+	double 		z_im;
+	double 		z_im2;
+	double 		Re_factor;
+	double 		Im_factor;
+	unsigned 	MaxIterations;
+	int			n;
+	int			x;
+	int			y;
+	float		scale;
+	int			palette;
+}				t_multi;
+
 typedef struct	s_fract
 {
-	float	xscale;
-	float	yscale;
-	float	zx;
-	float	zy;
-	float	xscale;
-	float	xscale;
-	float	xscale;
-	float	xscale;
-	float	xscale;
-	float	xscale;
-	float	xscale;
+	double		MaxRe;
+	double		MinRe;
+	double 		MaxIm;
+	double		MinIm;
+	double 		c_im;
+	double 		c_re;
+	double 		z_re;
+	double 		z_re2;
+	double 		z_im;
+	double 		z_im2;
+	double 		Re_factor;
+	double 		Im_factor;
+	unsigned 	MaxIterations;
+	int			n;
+	int			x;
+	int			y;
+	float		scale;
 }				t_fract;
 
 typedef struct	s_mlx
 {
+
 	void		*mlx_ptr;
 	void		*mlx_win;
 	void		*img_ptr;
@@ -61,13 +96,19 @@ typedef struct	s_mlx
 	int			bpp;
 	int			s_l;
 	int			endian;
-	float		zoom;
-	float		scale;
+	bool		hud;
 	t_fract		draw;
 }				t_mlx;
 
 int		ft_name_tree(char *name);
 void	ft_fill_pixel(char *img_str, int x, int y, int color);
-char	*ft_mandelbrot(char *img, double MaxRe, t_fract *draw);
+char	*ft_mandelbrot(char *img, int palette, t_fract *draw);
+
+void	ft_hud(void *param, double time, int iterations);
+
+int		ft_palette_one(int n, int max);
+int		ft_palette_two(int n, int max);
+int		ft_palette_three(int n, int max);
+int		ft_palette_four(int n, int max);
 
 #endif
