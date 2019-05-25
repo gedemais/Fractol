@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/20 18:43:03 by gedemais          #+#    #+#             */
-/*   Updated: 2019/05/24 20:38:16 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/05/25 15:08:32 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int		ft_deal_key(int key, void *param)
 	time = ((double)t) / CLOCKS_PER_SEC;
 	if (((t_mlx*)param)->hud == true)
 		ft_hud(param, time, ((t_mlx*)param)->draw.MaxIterations);
-	((t_mlx*)param)->draw.scale = (((t_mlx*)param)->draw.MaxRe - ((t_mlx*)param)->draw.MinRe) * (double)((double)((t_mlx*)param)->draw.MaxIterations / 100) * 0.3;
+	((t_mlx*)param)->draw.scale = (((t_mlx*)param)->draw.MaxRe - ((t_mlx*)param)->draw.MinRe) * fabs(((t_mlx*)param)->draw.MaxRe);
 	return (1);
 }
 
