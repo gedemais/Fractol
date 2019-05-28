@@ -27,6 +27,8 @@ int		ft_palette_tree(int n, int max, int palette)
 		return (ft_palette_three(n, max));
 	else if (palette == 3)
 		return (ft_palette_four(n, max));
+	else if (palette == 4)
+		return (ft_palette_five(n, max));
 	else
 		return (0);
 }

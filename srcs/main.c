@@ -31,6 +31,7 @@ char	*ft_clear_image(void *param)
 	mlx_put_image_to_window((t_mlx*)param, ((t_mlx*)param)->mlx_win, ((t_mlx*)param)->img_ptr, 0, 0);
 	return (((t_mlx*)param)->img_data);
 }
+
 int 	ft_press(int button, int x, int y, void *param)
 {
 	clock_t 		t;
@@ -46,6 +47,8 @@ int 	ft_press(int button, int x, int y, void *param)
 		((t_mlx*)param)->draw.MaxRe -= ((1 - ratio_x) / 10) * ((t_mlx*)param)->draw.scale;
 		((t_mlx*)param)->draw.MinIm += ((1 - ratio_y) / 10) * ((t_mlx*)param)->draw.scale;
 		((t_mlx*)param)->draw.MaxIm -= (ratio_y / 10) * ((t_mlx*)param)->draw.scale;
+		if (((t_mlx*)param)->automatic)
+			((t_mlx*)param)->draw.MaxIterations += 2;
 	}
 	else if (button == 5)
 	{
@@ -53,6 +56,8 @@ int 	ft_press(int button, int x, int y, void *param)
 		((t_mlx*)param)->draw.MaxRe += (1 - ratio_x) / 10 * ((t_mlx*)param)->draw.scale;
 		((t_mlx*)param)->draw.MinIm -= (1 - ratio_y) / 10 * ((t_mlx*)param)->draw.scale;
 		((t_mlx*)param)->draw.MaxIm += ratio_y / 10 * ((t_mlx*)param)->draw.scale;
+		if (((t_mlx*)param)->automatic)
+			((t_mlx*)param)->draw.MaxIterations--;
 	}
 	t = clock(); 
 	((t_mlx*)param)->img_data = ft_clear_image(param);
@@ -61,7 +66,8 @@ int 	ft_press(int button, int x, int y, void *param)
 	t = clock() - t;
 	time = ((double)t) / CLOCKS_PER_SEC;
 	if (((t_mlx*)param)->hud == true)
-	ft_hud(param, time, ((t_mlx*)param)->draw.MaxIterations);
+		ft_hud(param, time, ((t_mlx*)param)->draw.MaxIterations);
+	((t_mlx*)param)->draw.scale = (((t_mlx*)param)->draw.MaxRe - ((t_mlx*)param)->draw.MinRe) * (double)((double)((t_mlx*)param)->draw.MaxIterations / 100);
 	return (1);
 }
 
@@ -104,6 +110,9 @@ int		ft_deal_key(int key, void *param)
 	}
 	else if (key == 4)
 		((t_mlx*)param)->hud = (((t_mlx*)param)->hud == false) ? true : false;
+	else if (key == 0)
+		((t_mlx*)param)->automatic = (((t_mlx*)param)->automatic == false) ? true : false;
+	else if (key == 0)
 	t = clock(); 
 	((t_mlx*)param)->img_data = ft_clear_image(param);
 	((t_mlx*)param)->img_data = ft_mandelbrot(((t_mlx*)param)->img_data, *ft_palette(), &((t_mlx*)param)->draw);
@@ -112,7 +121,7 @@ int		ft_deal_key(int key, void *param)
 	time = ((double)t) / CLOCKS_PER_SEC;
 	if (((t_mlx*)param)->hud == true)
 		ft_hud(param, time, ((t_mlx*)param)->draw.MaxIterations);
-	((t_mlx*)param)->draw.scale = (((t_mlx*)param)->draw.MaxRe - ((t_mlx*)param)->draw.MinRe) * fabs(((t_mlx*)param)->draw.MaxRe);
+	((t_mlx*)param)->draw.scale = (((t_mlx*)param)->draw.MaxRe - ((t_mlx*)param)->draw.MinRe) * (double)((double)((t_mlx*)param)->draw.MaxIterations / 100);
 	return (1);
 }
 
@@ -134,6 +143,7 @@ int		ft_fractol(char *name)
 		return (-1);
 	env.draw.scale = 1;
 	env.hud = true;
+	env.automatic = false;
 	env.draw.MaxIterations = ITER_BASE;
 	env.draw.MaxRe = 1.910770;
 	env.draw.MaxIm = 1.146398;

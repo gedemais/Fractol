@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/20 18:50:23 by gedemais          #+#    #+#             */
-/*   Updated: 2019/05/24 20:25:03 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/05/28 14:03:07 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@
 # define PUT8 ft_putstr("There\n");
 # define PUT9 ft_putstr("There\n");
 
-# define HGT 720
-# define WDT 1280
+# define HGT 1080
+# define WDT 1920
 # define KEY_PRESS 2
 # define KEY_PRESS_MASK (1L<<0)
-# define ITER_BASE 30
+# define ITER_BASE 50
 
 # define MANDELBROT 2
-# define NB_PALETTES 3
+# define NB_PALETTES 4
 
 # define NB_THREADS 8
 
@@ -97,6 +97,7 @@ typedef struct	s_mlx
 	int			s_l;
 	int			endian;
 	bool		hud;
+	bool		automatic;
 	t_fract		draw;
 }				t_mlx;
 
@@ -110,5 +111,6 @@ int		ft_palette_one(int n, int max);
 int		ft_palette_two(int n, int max);
 int		ft_palette_three(int n, int max);
 int		ft_palette_four(int n, int max);
+int		ft_palette_five(int n, int max);
 
 #endif

@@ -20,4 +20,5 @@ void		ft_hud(void *param, double time, int iterations)
 	mlx_string_put(((t_mlx*)param)->mlx_ptr, ((t_mlx*)param)->mlx_win, 140, 30, 0xFFFFFF, ft_itoa(iterations));
 	mlx_string_put(((t_mlx*)param)->mlx_ptr, ((t_mlx*)param)->mlx_win, 10, 50, 0xFFFFFF, "Switch colors : c");
 	mlx_string_put(((t_mlx*)param)->mlx_ptr, ((t_mlx*)param)->mlx_win, 10, 70, 0xFFFFFF, "HUD On / Off : h");
+	mlx_string_put(((t_mlx*)param)->mlx_ptr, ((t_mlx*)param)->mlx_win, 10, 90, 0xFFFFFF, "Automatic mode : a");
 }
