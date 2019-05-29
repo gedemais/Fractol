@@ -6,13 +6,13 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/23 12:15:16 by gedemais          #+#    #+#             */
-/*   Updated: 2019/05/23 17:08:50 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/05/29 12:16:58 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fractol.h"
 
-int		ft_palette_one(int n, int max)
+int		ft_palette_one(int n, int max, bool p)
 {
 	int		tab[16];
 	if (n == max)
@@ -33,10 +33,10 @@ int		ft_palette_one(int n, int max)
 	tab[13] = 0xffd070;
 	tab[14] = 0xffe070;
 	tab[15] = 0xfff070;
-	return (tab[n % 16]);
+	return (tab[(n + (p ? max : 0)) % 16]);
 }
 
-int		ft_palette_two(int n, int max)
+int		ft_palette_two(int n, int max, bool p)
 {
 	int		tab[16];
 	if (n == max)
@@ -57,10 +57,10 @@ int		ft_palette_two(int n, int max)
 	tab[13] = 0xd070ff;
 	tab[14] = 0xe070ff;
 	tab[15] = 0xf070ff;
-	return (tab[n % 16]);
+	return (tab[(n + (p ? max : 0)) % 16]);
 }
 
-int		ft_palette_three(int n, int max)
+int		ft_palette_three(int n, int max, bool p)
 {
 	int		tab[16];
 	if (n == max)
@@ -81,10 +81,10 @@ int		ft_palette_three(int n, int max)
 	tab[13] = 0xb5ff70;
 	tab[14] = 0xc0ff70;
 	tab[15] = 0xc5ff70;
-	return (tab[n % 16]);
+	return (tab[(n + (p ? max : 0)) % 16]);
 }
 
-int		ft_palette_four(int n, int max)
+int		ft_palette_four(int n, int max, bool p)
 {
 	int		tab[16];
 	if (n == max)
@@ -105,10 +105,10 @@ int		ft_palette_four(int n, int max)
 	tab[13] = 0x000000;
 	tab[14] = 0x000000;
 	tab[15] = 0x000000;
-	return (tab[(n + max) % 10]);
+	return (tab[(n + (p ? max : 0)) % 10]);
 }
 
-int		ft_palette_five(int n, int max)
+int		ft_palette_five(int n, int max, bool p)
 {
 	int		tab[14];
 	if (n == max)
@@ -127,5 +127,5 @@ int		ft_palette_five(int n, int max)
 	tab[11] = 0x904f10;
 	tab[12] = 0x00ff8b;
 	tab[13] = 0x10ff9c;
-	return (tab[(n + max) % 14]);
+	return (tab[(n + (p ? max : 0)) % 14]);
 }

@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/20 19:02:07 by gedemais          #+#    #+#             */
-/*   Updated: 2019/05/20 19:42:42 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/05/29 13:56:08 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,10 @@ int		ft_name_tree(char *name)
 {
 	if (ft_uncase_strncmp(name, "mandelbrot", 10) == 0)
 		return (MANDELBROT);
+	else if (ft_uncase_strncmp(name, "julia", 5) == 0)
+		return (JULIA);
+	else if (ft_uncase_strncmp(name, "burningship", 11) == 0)
+		return (BURNINGSHIP);
 	else
 		return (-1);
 	return (0);

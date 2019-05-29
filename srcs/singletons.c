@@ -1,18 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_to_radians.c                                    :+:      :+:    :+:   */
+/*   singletons.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/14 11:29:42 by gedemais          #+#    #+#             */
-/*   Updated: 2019/01/14 12:59:24 by gedemais         ###   ########.fr       */
+/*   Created: 2019/05/29 13:07:34 by gedemais          #+#    #+#             */
+/*   Updated: 2019/05/29 13:18:33 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/fractol.h"
 
-double	ft_to_radians(double degree)
+double	*julia_x(void)
 {
-	return (degree / (180.0 / M_PI));
+	static double	x = 0.156;
+
+	return (&x);
+}
+
+double	*julia_y(void)
+{
+	static double	y = -0.8;
+
+	return (&y);
 }

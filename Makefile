@@ -6,7 +6,7 @@
 #    By: gedemais <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/20 18:40:16 by gedemais          #+#    #+#              #
-#    Updated: 2019/05/24 20:16:31 by gedemais         ###   ########.fr        #
+#    Updated: 2019/05/29 13:07:14 by gedemais         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRCS_NAME = 	main.c\
 		mlx_fts_1.c\
 		colors.c\
 		hud.c\
+		singletons.c\
 		parsing.c
 
 SRCS_PATH = srcs/

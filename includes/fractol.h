@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/20 18:50:23 by gedemais          #+#    #+#             */
-/*   Updated: 2019/05/28 14:03:07 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/05/29 13:55:11 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,16 @@
 # define PUT8 ft_putstr("There\n");
 # define PUT9 ft_putstr("There\n");
 
-# define HGT 1080
-# define WDT 1920
+# define HGT 720
+# define WDT 1280
 # define KEY_PRESS 2
 # define KEY_PRESS_MASK (1L<<0)
 # define ITER_BASE 50
 
 # define MANDELBROT 2
+# define JULIA 4
+# define BURNINGSHIP 8
+
 # define NB_PALETTES 4
 
 # define NB_THREADS 8
@@ -63,6 +66,8 @@ typedef struct	s_multi
 	int			y;
 	float		scale;
 	int			palette;
+	bool		psychedelic;
+	int			mask;
 }				t_multi;
 
 typedef struct	s_fract
@@ -84,6 +89,8 @@ typedef struct	s_fract
 	int			x;
 	int			y;
 	float		scale;
+	bool		psychedelic;
+	int			mask;
 }				t_fract;
 
 typedef struct	s_mlx
@@ -98,6 +105,7 @@ typedef struct	s_mlx
 	int			endian;
 	bool		hud;
 	bool		automatic;
+	bool		psychedelic;
 	t_fract		draw;
 }				t_mlx;
 
@@ -107,10 +115,13 @@ char	*ft_mandelbrot(char *img, int palette, t_fract *draw);
 
 void	ft_hud(void *param, double time, int iterations);
 
-int		ft_palette_one(int n, int max);
-int		ft_palette_two(int n, int max);
-int		ft_palette_three(int n, int max);
-int		ft_palette_four(int n, int max);
-int		ft_palette_five(int n, int max);
+double	*julia_x(void);
+double	*julia_y(void);
+
+int		ft_palette_one(int n, int max, bool psychedelic);
+int		ft_palette_two(int n, int max, bool psychedelic);
+int		ft_palette_three(int n, int max, bool psychedelic);
+int		ft_palette_four(int n, int max, bool psychedelic);
+int		ft_palette_five(int n, int max, bool psychedelic);
 
 #endif

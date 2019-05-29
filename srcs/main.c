@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/20 18:43:03 by gedemais          #+#    #+#             */
-/*   Updated: 2019/05/25 15:08:32 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/05/29 14:30:27 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,12 +87,29 @@ void	ft_arrows(void *param, int key, double scale)
 		((t_mlx*)param)->draw.MinIm += 0.01 * scale;
 	else if (key == 126)
 		((t_mlx*)param)->draw.MinIm -= 0.01 * scale;
+
+}
+
+int		ft_switch_fractal(void *param, int mask)
+{
+	if (mask & MANDELBROT)
+		mask = JULIA;
+	else if (mask & JULIA)
+		mask = MANDELBROT;
+	else
+		return (0);
+	((t_mlx*)param)->draw.MaxRe = 1.910770;
+	((t_mlx*)param)->draw.MaxIm = 1.146398;
+	((t_mlx*)param)->draw.MinRe = -2.152622;
+	((t_mlx*)param)->draw.MinIm = -1.139259;
+	((t_mlx*)param)->img_data = ft_clear_image(param);
+	return (mask);
 }
 
 int		ft_deal_key(int key, void *param)
 {
 	clock_t 		t;
-	double 			time;
+	double 			time = 0.0;
 	static int		palette = 0;
 
 	if (key == 123 || key == 124 || key == 125 || key == 126)
@@ -112,13 +129,20 @@ int		ft_deal_key(int key, void *param)
 		((t_mlx*)param)->hud = (((t_mlx*)param)->hud == false) ? true : false;
 	else if (key == 0)
 		((t_mlx*)param)->automatic = (((t_mlx*)param)->automatic == false) ? true : false;
-	else if (key == 0)
-	t = clock(); 
-	((t_mlx*)param)->img_data = ft_clear_image(param);
+	else if (key == 35)
+	{
+		((t_mlx*)param)->psychedelic = (((t_mlx*)param)->psychedelic == false) ? true : false;
+		((t_mlx*)param)->draw.psychedelic = ((t_mlx*)param)->psychedelic;
+	}
+	else if (key == 49)
+		((t_mlx*)param)->draw.mask = ft_switch_fractal(param, ((t_mlx*)param)->draw.mask);
+
+	t = clock();
 	((t_mlx*)param)->img_data = ft_mandelbrot(((t_mlx*)param)->img_data, *ft_palette(), &((t_mlx*)param)->draw);
 	mlx_put_image_to_window((t_mlx*)param, ((t_mlx*)param)->mlx_win, ((t_mlx*)param)->img_ptr, 0, 0);
 	t = clock() - t; 
 	time = ((double)t) / CLOCKS_PER_SEC;
+		time = 0;
 	if (((t_mlx*)param)->hud == true)
 		ft_hud(param, time, ((t_mlx*)param)->draw.MaxIterations);
 	((t_mlx*)param)->draw.scale = (((t_mlx*)param)->draw.MaxRe - ((t_mlx*)param)->draw.MinRe) * (double)((double)((t_mlx*)param)->draw.MaxIterations / 100);
@@ -134,7 +158,7 @@ int		ft_fractol(char *name)
 		return (-1);
 	if (!(env.mlx_win = mlx_new_window(env.mlx_ptr, WDT, HGT, "Fractol du sale")))
 		return (-1);
-	if ((mask = ft_name_tree(name)) == -1)
+	if ((env.draw.mask = ft_name_tree(name)) == -1)
 		return (-1);
 	if (!(env.img_ptr = mlx_new_image(env.mlx_ptr, WDT, HGT)))
 		return (-1);
@@ -144,6 +168,7 @@ int		ft_fractol(char *name)
 	env.draw.scale = 1;
 	env.hud = true;
 	env.automatic = false;
+	env.psychedelic = false;
 	env.draw.MaxIterations = ITER_BASE;
 	env.draw.MaxRe = 1.910770;
 	env.draw.MaxIm = 1.146398;
