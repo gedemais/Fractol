@@ -17,7 +17,6 @@ int		ft_init_map(t_mlx *env, int size)
 		if (!(env->tmp[i] = (bool*)malloc(sizeof(bool) * size)))
 			return (-1);
 		ft_memset(env->map[i], false, sizeof(bool) * size);
-		ft_memset(env->tmp[i], false, sizeof(bool) * size);
 		i++;
 	}
 	return (0);
@@ -42,26 +41,25 @@ bool	**ft_cpy_map(bool **dest, bool **src, int size)
 	return (dest);
 }
 
-int		ft_count_neighbours(bool **map, int i, int j, int size)
+int	ft_count_neighbours(bool **map, int i, int j, int size)
 {
-	int		ret;
+	int	ret = 0;
 
-	ret = 0;
-	if (i > 0 && map[i - 1][j])
+	if (j < size - 1 && map[i][j + 1]) // Left
 		ret++;
-	if (i < size - 1 && map[i + 1][j])
+	if (j > 0 && map[i][j - 1]) // Right
 		ret++;
-	if (j > 0 && map[i][j - 1])
+	if (i > 0 && map[i - 1][j]) // Up
 		ret++;
-	if (j < size - 1 && map[i][j + 1])
+	if (i < size - 1 && map[i + 1][j]) // Down
 		ret++;
-	if (i > 0 && j > 0 && map[i - 1][j - 1])
+	if (i < size - 1 && j < size - 1 && map[i + 1][j + 1]) // Bot right
 		ret++;
-	if (i > 0 && j < size - 1 && map[i - 1][j + 1])
+	if (i < size - 1 && j > 0 && map[i + 1][j - 1]) // Bot left
 		ret++;
-	if (i < size - 1 && j > 0 && map[i + 1][j - 1])
+	if (i > 0 && j > 0 && map[i - 1][j - 1]) // Top left
 		ret++;
-	if (i < size - 1 && j < size - 1 && map[i + 1][j + 1])
+	if (i > 0 && j < size - 1 && map[i - 1][j + 1]) // Top right
 		ret++;
 	return (ret);
 }
@@ -70,22 +68,23 @@ void	*ft_process(void *param)
 {
 	int		i = 0;
 	int		j;
-	int		neighbours;
+	int		neighbours = 0;
 
 	((t_mlx*)param)->tmp = ft_cpy_map(((t_mlx*)param)->tmp, ((t_mlx*)param)->map, ((t_mlx*)param)->size);
-	if (neighbours > 0)
-		printf("%d\n", neighbours);
 	while (i < ((t_mlx*)param)->size)
 	{
 		j = 0;
 		while (j < ((t_mlx*)param)->size)
 		{
-//			neighbours = ft_count_neighbours(((t_mlx*)param)->tmp, i, j, ((t_mlx*)param)->size);
-			if (neighbours == 3)
-				((t_mlx*)param)->map[i][j] = true;
-			else if (neighbours == 2)
+			neighbours = ft_count_neighbours(((t_mlx*)param)->tmp, i, j, ((t_mlx*)param)->size);
+			if ((((t_mlx*)param)->map[i][j] && (neighbours == 2 || neighbours == 3)) || (!((t_mlx*)param)->map[i][j] && (neighbours < 2 || neighbours > 3))) // Survive rule
+			{
+				j++;
 				continue ;
-			else if (neighbours < 2 || neighbours > 3)
+			}
+			else if (!((t_mlx*)param)->map[i][j] && neighbours == 3) // Birth rule
+				((t_mlx*)param)->map[i][j] = true;
+			else if (((t_mlx*)param)->map[i][j] && (neighbours < 2 || neighbours > 3)) // Death rule
 				((t_mlx*)param)->map[i][j] = false;
 			j++;
 		}

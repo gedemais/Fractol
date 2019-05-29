@@ -12,16 +12,47 @@ int		*ft_palette(void)
 
 	return (&val);
 }
+/*
+void	*ft_add_cell(void *param, int x, int y)
+{
+	int	i = x / 
+}
+
+int     ft_press(int button, int x, int y, void *param)
+{
+	if (button == 1)
+		param = ft_add_cell(param, x, y);
+//	else if (button == 2)
+//		param = ft_kill_cell(param, x, y);
+	return (1);
+}*/
 
 int		ft_deal_key(int key, void *param)
 {
+	static int	gen = 0;
+	char		*generation;
+
 	if (key == 53)
 		ft_exit();
-	((t_mlx*)param)->img_data = ft_clear_image(param);
 	param = ft_process(param);
 	((t_mlx*)param)->img_data = ft_print_image(param);
 	mlx_put_image_to_window((t_mlx*)param, ((t_mlx*)param)->mlx_win, ((t_mlx*)param)->img_ptr, 0, 0);
+	mlx_string_put(((t_mlx*)param)->mlx_ptr, ((t_mlx*)param)->mlx_win, 10, 10, 0, "Generation");
+	mlx_string_put(((t_mlx*)param)->mlx_ptr, ((t_mlx*)param)->mlx_win, 120, 10, 0, (generation = ft_itoa(gen)));
+	ft_strdel(&generation);
+	gen++;
 	return (1);
+}
+
+void		ft_set_rand(void *param)
+{
+	int	i = 0;
+
+	while (i < ((t_mlx*)param)->wdt * 10)
+	{
+		((t_mlx*)param)->map[rand() % ((t_mlx*)param)->size][rand() % ((t_mlx*)param)->size] = true;
+		i++;
+	}
 }
 
 int		ft_jdlv(int size, int hgt, int wdt)
@@ -51,16 +82,24 @@ int		ft_jdlv(int size, int hgt, int wdt)
 	*ft_hgt() = hgt;
 	*ft_wdt() = wdt;
 
-	env.map[0][0] = true;
-	env.map[0][1] = true;
-	env.map[0][2] = true;
-	env.map[0][3] = true;
-	env.map[0][4] = true;
-	env.map[0][5] = true;
+	ft_set_rand((void*)&env);
+/*	env.map[20][120] = true;
 
+	env.map[20][122] = true;
+	env.map[21][122] = true;
+
+	env.map[22][124] = true;
+	env.map[23][124] = true;
+	env.map[24][124] = true;
+
+	env.map[23][126] = true;
+	env.map[24][126] = true;
+	env.map[24][127] = true;
+	env.map[25][126] = true;*/
 	env.img_data = ft_print_image((void*)&env);
 	mlx_put_image_to_window(&env, env.mlx_win, env.img_ptr, 0, 0);
 	mlx_hook(env.mlx_win, KEY_PRESS, KEY_PRESS_MASK, ft_deal_key, &env);
+//	mlx_hook(env.mlx_win, 4, (1L<<2), ft_press, &env);
 	mlx_hook(env.mlx_win, 17, 1L << 17, ft_exit, &env);
 	mlx_loop(env.mlx_ptr);
 	return (0);

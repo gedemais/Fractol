@@ -21,8 +21,7 @@ char	*ft_draw_tale(void *param, int i, int j, int tale_size)
 		x = tx;
 		while (l < tale_size)
 		{
-			if (((t_mlx*)param)->map[i][j] == false)
-				ft_fill_pixel(((t_mlx*)param)->img_data, x, y, 0xFFFFFF);
+			ft_fill_pixel(((t_mlx*)param)->img_data, x, y, (((t_mlx*)param)->map[i][j]) ? 0 : 0xFFFFFF);
 			x++;
 			l++;
 		}
@@ -40,12 +39,9 @@ char	*ft_print_image(void *param)
 
 	while (i < ((t_mlx*)param)->size) // Loop iterating through every tales
 	{
-		j = 0;
-		while (j < ((t_mlx*)param)->size)
-		{
+		j = -1;
+		while (++j < ((t_mlx*)param)->size)
 			((t_mlx*)param)->img_data = ft_draw_tale(param, i, j, tale_size);
-			j++;
-		}
 		i++;
 	}
 	return (((t_mlx*)param)->img_data);
