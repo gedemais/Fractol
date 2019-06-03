@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/20 18:43:03 by gedemais          #+#    #+#             */
-/*   Updated: 2019/05/29 14:30:27 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/06/03 21:22:27 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,49 +25,44 @@ int		*ft_palette(void)
 	return (&val);
 }
 
-char	*ft_clear_image(void *param)
-{
-	ft_memset(((t_mlx*)param)->img_data, 0, HGT * WDT * 4);
-	mlx_put_image_to_window((t_mlx*)param, ((t_mlx*)param)->mlx_win, ((t_mlx*)param)->img_ptr, 0, 0);
-	return (((t_mlx*)param)->img_data);
-}
-
 int 	ft_press(int button, int x, int y, void *param)
 {
+	t_mlx			*s;
 	clock_t 		t;
 	double 			time;
-	double	ratio_x;
-	double	ratio_y;
+	double			ratio_x;
+	double			ratio_y;
 
+	s = ((t_mlx*)param);
 	ratio_x = (double)((double)x / WDT);
 	ratio_y = (double)((double)y / HGT);
-	if ((button == 1 || button == 4))
+	if ((button == 1 || button == 4) && s->draw.MaxIterations > 10)
 	{
-		((t_mlx*)param)->draw.MinRe += (ratio_x / 10) * ((t_mlx*)param)->draw.scale;
-		((t_mlx*)param)->draw.MaxRe -= ((1 - ratio_x) / 10) * ((t_mlx*)param)->draw.scale;
-		((t_mlx*)param)->draw.MinIm += ((1 - ratio_y) / 10) * ((t_mlx*)param)->draw.scale;
-		((t_mlx*)param)->draw.MaxIm -= (ratio_y / 10) * ((t_mlx*)param)->draw.scale;
-		if (((t_mlx*)param)->automatic)
-			((t_mlx*)param)->draw.MaxIterations += 2;
+		s->draw.MinRe += (ratio_x / 10) * s->draw.scale;
+		s->draw.MaxRe -= ((1 - ratio_x) / 10) * s->draw.scale;
+		s->draw.MinIm += ((1 - ratio_y) / 10) * s->draw.scale;
+		s->draw.MaxIm -= (ratio_y / 10) * s->draw.scale;
+		if (s->automatic)
+			s->draw.MaxIterations += 1;
 	}
 	else if (button == 5)
 	{
-		((t_mlx*)param)->draw.MinRe -= ratio_x / 10 * ((t_mlx*)param)->draw.scale;
-		((t_mlx*)param)->draw.MaxRe += (1 - ratio_x) / 10 * ((t_mlx*)param)->draw.scale;
-		((t_mlx*)param)->draw.MinIm -= (1 - ratio_y) / 10 * ((t_mlx*)param)->draw.scale;
-		((t_mlx*)param)->draw.MaxIm += ratio_y / 10 * ((t_mlx*)param)->draw.scale;
-		if (((t_mlx*)param)->automatic)
-			((t_mlx*)param)->draw.MaxIterations--;
+		s->draw.MinRe -= ratio_x / 10 * s->draw.scale;
+		s->draw.MaxRe += (1 - ratio_x) / 10 * s->draw.scale;
+		s->draw.MinIm -= (1 - ratio_y) / 10 * s->draw.scale;
+		s->draw.MaxIm += ratio_y / 10 * s->draw.scale;
+		if (s->automatic)
+			s->draw.MaxIterations--;
 	}
 	t = clock(); 
-	((t_mlx*)param)->img_data = ft_clear_image(param);
-	((t_mlx*)param)->img_data = ft_mandelbrot(((t_mlx*)param)->img_data, *ft_palette(), &((t_mlx*)param)->draw);
-	mlx_put_image_to_window((t_mlx*)param, ((t_mlx*)param)->mlx_win, ((t_mlx*)param)->img_ptr, 0, 0);
+	ft_memset(((t_mlx*)param)->img_data, 0, HGT * WDT * 4);
+	s->img_data = ft_mandelbrot(s->img_data, *ft_palette(), &s->draw);
+	mlx_put_image_to_window((t_mlx*)param, s->mlx_win, s->img_ptr, 0, 0);
 	t = clock() - t;
 	time = ((double)t) / CLOCKS_PER_SEC;
-	if (((t_mlx*)param)->hud == true)
-		ft_hud(param, time, ((t_mlx*)param)->draw.MaxIterations);
-	((t_mlx*)param)->draw.scale = (((t_mlx*)param)->draw.MaxRe - ((t_mlx*)param)->draw.MinRe) * (double)((double)((t_mlx*)param)->draw.MaxIterations / 100);
+	if (s->hud == true)
+		ft_hud(param, time, s->draw.MaxIterations);
+	s->draw.scale = (s->draw.MaxRe - s->draw.MinRe) * (double)((double)s->draw.MaxIterations / 80);
 	return (1);
 }
 
@@ -87,7 +82,7 @@ void	ft_arrows(void *param, int key, double scale)
 		((t_mlx*)param)->draw.MinIm += 0.01 * scale;
 	else if (key == 126)
 		((t_mlx*)param)->draw.MinIm -= 0.01 * scale;
-
+	ft_memset(((t_mlx*)param)->img_data, 0, HGT * WDT * 4);
 }
 
 int		ft_switch_fractal(void *param, int mask)
@@ -102,7 +97,7 @@ int		ft_switch_fractal(void *param, int mask)
 	((t_mlx*)param)->draw.MaxIm = 1.146398;
 	((t_mlx*)param)->draw.MinRe = -2.152622;
 	((t_mlx*)param)->draw.MinIm = -1.139259;
-	((t_mlx*)param)->img_data = ft_clear_image(param);
+	ft_memset(((t_mlx*)param)->img_data, 0, HGT * WDT * 4);
 	return (mask);
 }
 
@@ -138,6 +133,7 @@ int		ft_deal_key(int key, void *param)
 		((t_mlx*)param)->draw.mask = ft_switch_fractal(param, ((t_mlx*)param)->draw.mask);
 
 	t = clock();
+	ft_memset(((t_mlx*)param)->img_data, 0, HGT * WDT * 4);
 	((t_mlx*)param)->img_data = ft_mandelbrot(((t_mlx*)param)->img_data, *ft_palette(), &((t_mlx*)param)->draw);
 	mlx_put_image_to_window((t_mlx*)param, ((t_mlx*)param)->mlx_win, ((t_mlx*)param)->img_ptr, 0, 0);
 	t = clock() - t; 
@@ -145,7 +141,7 @@ int		ft_deal_key(int key, void *param)
 		time = 0;
 	if (((t_mlx*)param)->hud == true)
 		ft_hud(param, time, ((t_mlx*)param)->draw.MaxIterations);
-	((t_mlx*)param)->draw.scale = (((t_mlx*)param)->draw.MaxRe - ((t_mlx*)param)->draw.MinRe) * (double)((double)((t_mlx*)param)->draw.MaxIterations / 100);
+	((t_mlx*)param)->draw.scale = (((t_mlx*)param)->draw.MaxRe - ((t_mlx*)param)->draw.MinRe) * (double)((double)((t_mlx*)param)->draw.MaxIterations / 80);
 	return (1);
 }
 
@@ -154,11 +150,11 @@ int		ft_fractol(char *name)
 	t_mlx	env;
 	int		mask;
 
+	if ((env.draw.mask = ft_name_tree(name)) == -1)
+		return (-1);
 	if (!(env.mlx_ptr = mlx_init()))
 		return (-1);
 	if (!(env.mlx_win = mlx_new_window(env.mlx_ptr, WDT, HGT, "Fractol du sale")))
-		return (-1);
-	if ((env.draw.mask = ft_name_tree(name)) == -1)
 		return (-1);
 	if (!(env.img_ptr = mlx_new_image(env.mlx_ptr, WDT, HGT)))
 		return (-1);

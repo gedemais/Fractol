@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/23 12:15:16 by gedemais          #+#    #+#             */
-/*   Updated: 2019/05/29 12:16:58 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/06/03 16:23:23 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int		ft_palette_one(int n, int max, bool p)
 {
 	int		tab[16];
+
 	if (n == max)
 		return (0);
 	tab[0] = 0xff0000;
@@ -39,6 +40,7 @@ int		ft_palette_one(int n, int max, bool p)
 int		ft_palette_two(int n, int max, bool p)
 {
 	int		tab[16];
+
 	if (n == max)
 		return (0);
 	tab[0] = 0x0000ff;
@@ -63,6 +65,7 @@ int		ft_palette_two(int n, int max, bool p)
 int		ft_palette_three(int n, int max, bool p)
 {
 	int		tab[16];
+
 	if (n == max)
 		return (0);
 	tab[0] = 0x00ff00;
@@ -87,6 +90,7 @@ int		ft_palette_three(int n, int max, bool p)
 int		ft_palette_four(int n, int max, bool p)
 {
 	int		tab[16];
+
 	if (n == max)
 		return (0);
 	tab[0] = 0xff0000;
@@ -110,22 +114,16 @@ int		ft_palette_four(int n, int max, bool p)
 
 int		ft_palette_five(int n, int max, bool p)
 {
-	int		tab[14];
+	int		tab[7];
+
 	if (n == max)
 		return (0);
 	tab[0] = 0x0000ff;
-	tab[1] = 0x3030ff;
-	tab[2] = 0x00ff7f;
-	tab[3] = 0x30ff9f;
-	tab[4] = 0x00ffff;
-	tab[5] = 0x30ffff;
-	tab[6] = 0x00ff00;
-	tab[7] = 0x30ff30;
-	tab[8] = 0xff0000;
-	tab[9] = 0xff3030;
-	tab[10] = 0x824b00;
-	tab[11] = 0x904f10;
-	tab[12] = 0x00ff8b;
-	tab[13] = 0x10ff9c;
-	return (tab[(n + (p ? max : 0)) % 14]);
+	tab[1] = 0x3399ff;
+	tab[2] = 0x00ffff;
+	tab[3] = 0x00ff00;
+	tab[4] = 0xffff00;
+	tab[5] = 0x82004b;
+	tab[6] = 0xe22b8a;
+	return (tab[(n + (p ? max : 0)) % 7]);
 }

@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/20 19:17:04 by gedemais          #+#    #+#             */
-/*   Updated: 2019/05/29 14:27:58 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/06/03 21:13:59 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,67 +35,89 @@ int		ft_palette_tree(int n, int max, int palette, bool psychedelic)
 
 double	ft_fractals_tree(void *param, char w)
 {
+	t_multi	*s;
 	double	manjuliax;
 	double	manjuliay;
 	double	shipx;
 	double	shipy;
 
-	manjuliax = ((((t_multi*)param)->z_re + ((t_multi*)param)->z_re)) * ((t_multi*)param)->z_im;
-	manjuliay = ((t_multi*)param)->z_re2 - ((t_multi*)param)->z_im2;
-	shipx = ft_sq(((t_multi*)param)->z_re2);
-	shipy = ft_sq(((t_multi*)param)->z_im2);
-	if (((t_multi*)param)->mask & MANDELBROT)
-		return ((w == 'x') ? (manjuliax + ((t_multi*)param)->c_im) : manjuliay + ((t_multi*)param)->c_re);
-	else if (((t_multi*)param)->mask & JULIA)
+	s = ((t_multi*)param);
+	manjuliax = ((s->z_re + s->z_re)) * s->z_im;
+	manjuliay = s->z_re2 - s->z_im2;
+	if (s->mask & MANDELBROT)
+		return ((w == 'x') ? (manjuliax + s->c_im) : manjuliay + s->c_re);
+	else if (s->mask & JULIA)
+	{
 		return ((w == 'x') ? manjuliax + *julia_x() : manjuliay + *julia_y());
-	else if (((t_multi*)param)->mask & BURNINGSHIP)
-		return ((w == 'x') ? shipx + ((t_multi*)param)->c_re : shipy + ((t_multi*)param)->c_im);
+	}
+	else if (s->mask & BURNINGSHIP)
+	{
+		shipx = ft_sq(s->z_re2);
+		shipy = ft_sq(s->z_im2);
+		return ((w == 'x') ? shipx + s->c_re : shipy + s->c_im);
+	}
 	else
 		return (0);
 }
 
+bool	ft_check(void *param)
+{
+	t_multi	*s;
+	double	tmp;
+	double	p;
+
+	s = ((t_multi*)param);
+	s->z_re2 = s->z_re * s->z_re;
+	s->z_im2 = s->z_im * s->z_im;
+
+	p = sqrt(ft_sq((s->z_re - (0.25))) + s->z_im2);
+	tmp = ft_sq(p);
+	if (s->z_re2 + s->z_im2 > 4 || s->z_re < p - (tmp + tmp + 0.25))
+		return (false);
+	s->z_im =  ft_fractals_tree(param, 'x');
+	s->z_re =  ft_fractals_tree(param, 'y');
+	return (true);
+}
+
+bool	ft_is_inside(void *param)
+{
+	t_multi	*s;
+
+	s = ((t_multi*)param);
+	s->c_re = s->MinRe + s->x * s->Re_factor;
+	s->z_re = s->c_re;
+	s->z_im = s->c_im;
+	s->n = 0;
+	while (s->n < s->MaxIterations)
+	{
+		if (ft_check(param) == false)
+			return (false);
+		s->n++;
+	}
+	return (true);
+}
+
 void	*ft_multibrot(void *param)
 {
+	t_multi	*s;
 	int		loop;
-	bool	is_inside;
-	double	p;
 	double	tmp;
 
-	loop = ((((t_multi*)param)->index + 1) * (HGT / NB_THREADS));
-	((t_multi*)param)->MaxIm = ((t_multi*)param)->MinIm + (((t_multi*)param)->MaxRe - ((t_multi*)param)->MinRe)*HGT/WDT;
-	((t_multi*)param)->Re_factor = (((t_multi*)param)->MaxRe - ((t_multi*)param)->MinRe) / (WDT);
-	((t_multi*)param)->Im_factor = (((t_multi*)param)->MaxIm - ((t_multi*)param)->MinIm)/(HGT);
-	while (++((t_multi*)param)->y < loop)
+	s = ((t_multi*)param);
+	loop = ((s->index + 1) * (HGT / NB_THREADS));
+	s->MaxIm = s->MinIm + (s->MaxRe - s->MinRe) * HGT / WDT;
+	s->Re_factor = (s->MaxRe - s->MinRe) / WDT;
+	s->Im_factor = (s->MaxIm - s->MinIm) / HGT;
+	while (++s->y < loop)
 	{
-		((t_multi*)param)->x = 0;
-		((t_multi*)param)->c_im = ((t_multi*)param)->MaxIm - ((t_multi*)param)->y * ((t_multi*)param)->Im_factor;
-		while (++((t_multi*)param)->x < WDT)
+		s->x = 0;
+		s->c_im = s->MaxIm - s->y * s->Im_factor;
+		while (++s->x < WDT)
 		{
-			((t_multi*)param)->c_re = ((t_multi*)param)->MinRe + ((t_multi*)param)->x * ((t_multi*)param)->Re_factor;
-			((t_multi*)param)->z_re = ((t_multi*)param)->c_re;
-			((t_multi*)param)->z_im = ((t_multi*)param)->c_im;
-			is_inside= true;
-			((t_multi*)param)->n = 0;
-			while (((t_multi*)param)->n < ((t_multi*)param)->MaxIterations)
-			{
-				((t_multi*)param)->z_re2 = ((t_multi*)param)->z_re * ((t_multi*)param)->z_re;
-				((t_multi*)param)->z_im2 = ((t_multi*)param)->z_im * ((t_multi*)param)->z_im;
-
-				p = sqrt(ft_sq((((t_multi*)param)->z_re - (0.25))) + ((t_multi*)param)->z_im2);
-				tmp = ft_sq(p);
-				if (((t_multi*)param)->z_re2 + ((t_multi*)param)->z_im2 > 4 || ((t_multi*)param)->z_re < p - (tmp + tmp + 0.25))
-				{
-					is_inside = false;
-					break;
-				}
-				((t_multi*)param)->z_im =  ft_fractals_tree(param, 'x');
-				((t_multi*)param)->z_re =  + ft_fractals_tree(param, 'y');
-				((t_multi*)param)->n++;
-			}
-			if (is_inside)
+			if (ft_is_inside(param))
 				continue ;
 			else
-				ft_fill_pixel(((t_multi*)param)->img, ((t_multi*)param)->x, ((t_multi*)param)->y, ft_palette_tree(((t_multi*)param)->n, ((t_multi*)param)->MaxIterations, ((t_multi*)param)->palette, ((t_multi*)param)->psychedelic));
+				ft_fill_pixel(s->img, s->x, s->y, ft_palette_tree(s->n, s->MaxIterations, s->palette, s->psychedelic));
 		}
 	}
 	pthread_exit(NULL);

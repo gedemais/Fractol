@@ -6,7 +6,7 @@
 #    By: gedemais <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/20 18:40:16 by gedemais          #+#    #+#              #
-#    Updated: 2019/05/29 13:07:14 by gedemais         ###   ########.fr        #
+#    Updated: 2019/06/03 20:27:11 by gedemais         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ CC = gcc
 
 CFLAGS = -Wall -Werror -Wextra
 
-OFLAGS = -O1 -O2 -O3 -Ofast -march=native
+OFLAGS = -Os -Ofast -march=native
 
 INC = includes/fractol.h
 
