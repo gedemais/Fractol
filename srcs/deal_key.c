@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 18:39:36 by gedemais          #+#    #+#             */
-/*   Updated: 2019/06/04 18:54:21 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/06/04 19:02:47 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,14 +88,13 @@ int		ft_deal_key(int key, void *param)
 	if (ft_keys_tree(param, key) == 0)
 		return (1);
 	t = clock();
-	ft_memset(((t_mlx*)param)->img_data, 0, HGT * WDT * 4);
-	((t_mlx*)param)->img_data = ft_mandelbrot(((t_mlx*)param)->img_data, *ft_palette(), &((t_mlx*)param)->draw);
-	mlx_put_image_to_window((t_mlx*)param, ((t_mlx*)param)->mlx_win, ((t_mlx*)param)->img_ptr, 0, 0);
+	ft_memset(s->img_data, 0, HGT * WDT * 4);
+	s->img_data = ft_mandelbrot(s->img_data, *ft_palette(), &s->draw);
+	mlx_put_image_to_window(s, s->mlx_win, s->img_ptr, 0, 0);
 	t = clock() - t; 
 	time = ((double)t) / CLOCKS_PER_SEC;
-		time = 0;
-	if (((t_mlx*)param)->hud == true)
-		ft_hud(param, time, ((t_mlx*)param)->draw.MaxIterations);
-	((t_mlx*)param)->draw.scale = (((t_mlx*)param)->draw.MaxRe - ((t_mlx*)param)->draw.MinRe) * (double)((double)((t_mlx*)param)->draw.MaxIterations / 80);
+	if (s->hud == true)
+		ft_hud(param, time, s->draw.MaxIterations);
+	s->draw.scale = (s->draw.MaxRe - s->draw.MinRe) * (double)((double)s->draw.MaxIterations / 80);
 	return (1);
 }

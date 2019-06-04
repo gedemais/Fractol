@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/20 18:50:23 by gedemais          #+#    #+#             */
-/*   Updated: 2019/06/04 18:50:54 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/06/04 19:08:49 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ typedef struct	s_mlx
 	bool		hud;
 	bool		automatic;
 	bool		psychedelic;
+	bool		julia_m;
 	t_fract		draw;
 }				t_mlx;
 
@@ -167,6 +168,7 @@ double	ft_fractals_tree(void *param, char w);
 int		ft_deal_key(int key, void *param);
 
 int 	ft_press(int button, int x, int y, void *param);
+int 	ft_pos(int x, int y, void *param);
 
 double	*julia_x(void);
 double	*julia_y(void);
