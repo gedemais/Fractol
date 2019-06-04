@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/29 13:07:34 by gedemais          #+#    #+#             */
-/*   Updated: 2019/05/29 13:18:33 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/06/04 18:50:19 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,11 @@ double	*julia_y(void)
 	static double	y = -0.8;
 
 	return (&y);
+}
+
+int	*ft_palette(void)
+{
+	static int	val = 0;
+
+	return (&val);
 }

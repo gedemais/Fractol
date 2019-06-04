@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/20 18:50:23 by gedemais          #+#    #+#             */
-/*   Updated: 2019/06/03 21:04:37 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/06/04 18:50:54 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,8 +150,6 @@ char	*ft_mandelbrot(char *img, int palette, t_fract *draw);
 
 void	ft_hud(void *param, double time, int iterations);
 
-double	*julia_x(void);
-double	*julia_y(void);
 
 int		ft_palette_one(int n, int max, bool psychedelic);
 int		ft_palette_two(int n, int max, bool psychedelic);
@@ -162,4 +160,15 @@ int		ft_palette_five(int n, int max, bool psychedelic);
 int		ft_count_files(char *path);
 char	**ft_load_kernels(char *path);
 
+int	ft_exit(void);
+double	ft_sq(double nb);
+int		ft_palette_tree(int n, int max, int palette, bool psychedelic);
+double	ft_fractals_tree(void *param, char w);
+int		ft_deal_key(int key, void *param);
+
+int 	ft_press(int button, int x, int y, void *param);
+
+double	*julia_x(void);
+double	*julia_y(void);
+int		*ft_palette(void);
 #endif

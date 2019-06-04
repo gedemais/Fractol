@@ -6,7 +6,7 @@
 #    By: gedemais <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/20 18:40:16 by gedemais          #+#    #+#              #
-#    Updated: 2019/06/03 20:27:11 by gedemais         ###   ########.fr        #
+#    Updated: 2019/06/04 18:45:38 by gedemais         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,9 @@ SRCS_NAME = 	main.c\
 		colors.c\
 		hud.c\
 		singletons.c\
+		deal_key.c\
+		press.c\
+		utils.c\
 		parsing.c
 
 SRCS_PATH = srcs/

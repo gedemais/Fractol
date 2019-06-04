@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/23 12:15:16 by gedemais          #+#    #+#             */
-/*   Updated: 2019/06/03 16:23:23 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/06/04 18:37:21 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,116 +14,53 @@
 
 int		ft_palette_one(int n, int max, bool p)
 {
-	int		tab[16];
+	static int		tab[16] = {0xff0000, 0xff1010, 0xff2010, 0xff3020, 0xff4020,
+		0xff5030, 0xff6030, 0xff7040, 0xff8040, 0xff9050, 0xffa050, 0xffb060,
+		0xffc060, 0xffd070, 0xffe070, 0xfff070};
 
 	if (n == max)
 		return (0);
-	tab[0] = 0xff0000;
-	tab[1] = 0xff1010;
-	tab[2] = 0xff2010;
-	tab[3] = 0xff3020;
-	tab[4] = 0xff4020;
-	tab[5] = 0xff5030;
-	tab[6] = 0xff6030;
-	tab[7] = 0xff7040;
-	tab[8] = 0xff8040;
-	tab[9] = 0xff9050;
-	tab[10] = 0xffa050;
-	tab[11] = 0xffb060;
-	tab[12] = 0xffc060;
-	tab[13] = 0xffd070;
-	tab[14] = 0xffe070;
-	tab[15] = 0xfff070;
 	return (tab[(n + (p ? max : 0)) % 16]);
 }
 
 int		ft_palette_two(int n, int max, bool p)
 {
-	int		tab[16];
+	int		tab[16] = {0x0000ff, 0x1010ff, 0x2010ff, 0x3020ff, 0x4020ff, 0x5030ff,
+		0x6030ff, 0x7040ff, 0x8040ff, 0x9050ff, 0xa050ff, 0xb060ff, 0xc060ff,
+		0xd070ff, 0xe070ff, 0xf070ff};
 
 	if (n == max)
 		return (0);
-	tab[0] = 0x0000ff;
-	tab[1] = 0x1010ff;
-	tab[2] = 0x2010ff;
-	tab[3] = 0x3020ff;
-	tab[4] = 0x4020ff;
-	tab[5] = 0x5030ff;
-	tab[6] = 0x6030ff;
-	tab[7] = 0x7040ff;
-	tab[8] = 0x8040ff;
-	tab[9] = 0x9050ff;
-	tab[10] = 0xa050ff;
-	tab[11] = 0xb060ff;
-	tab[12] = 0xc060ff;
-	tab[13] = 0xd070ff;
-	tab[14] = 0xe070ff;
-	tab[15] = 0xf070ff;
 	return (tab[(n + (p ? max : 0)) % 16]);
 }
 
 int		ft_palette_three(int n, int max, bool p)
 {
-	int		tab[16];
+	int		tab[16] = {0x00ff00, 0x10ff10, 0x20ff10, 0x30ff20, 0x40ff20,
+		0x50ff30, 0x60ff30, 0x70ff40, 0x80ff40, 0x90ff50, 0xa0ff50, 0xa5ff60,
+		0xb0ff60, 0xb5ff70, 0xc0ff70, 0xc5ff70};
 
 	if (n == max)
 		return (0);
-	tab[0] = 0x00ff00;
-	tab[1] = 0x10ff10;
-	tab[2] = 0x20ff10;
-	tab[3] = 0x30ff20;
-	tab[4] = 0x40ff20;
-	tab[5] = 0x50ff30;
-	tab[6] = 0x60ff30;
-	tab[7] = 0x70ff40;
-	tab[8] = 0x80ff40;
-	tab[9] = 0x90ff50;
-	tab[10] = 0xa0ff50;
-	tab[11] = 0xa5ff60;
-	tab[12] = 0xb0ff60;
-	tab[13] = 0xb5ff70;
-	tab[14] = 0xc0ff70;
-	tab[15] = 0xc5ff70;
 	return (tab[(n + (p ? max : 0)) % 16]);
 }
 
 int		ft_palette_four(int n, int max, bool p)
 {
-	int		tab[16];
+	int		tab[10] = {0xff0000, 0x00ff00, 0x0000ff, 0xffff00, 0xff00ff,
+		0x00ffff, 0xffdd00, 0x00ffdd, 0xdd00ff, 0xc3f23f};
 
 	if (n == max)
 		return (0);
-	tab[0] = 0xff0000;
-	tab[1] = 0x00ff00;
-	tab[2] = 0x0000ff;
-	tab[3] = 0xffff00;
-	tab[4] = 0xff00ff;
-	tab[5] = 0x00ffff;
-	tab[6] = 0xffdd00;
-	tab[7] = 0x00ffdd;
-	tab[8] = 0xdd00ff;
-	tab[9] = 0xc3f23f;
-	tab[10] = 0x000000;
-	tab[11] = 0x000000;
-	tab[12] = 0x000000;
-	tab[13] = 0x000000;
-	tab[14] = 0x000000;
-	tab[15] = 0x000000;
 	return (tab[(n + (p ? max : 0)) % 10]);
 }
 
 int		ft_palette_five(int n, int max, bool p)
 {
-	int		tab[7];
+	int		tab[7] = {0x0000ff, 0x3399ff, 0x00ffff, 0x00ff00, 0xffff00,
+		0x82004b, 0xe22b8a};
 
 	if (n == max)
 		return (0);
-	tab[0] = 0x0000ff;
-	tab[1] = 0x3399ff;
-	tab[2] = 0x00ffff;
-	tab[3] = 0x00ff00;
-	tab[4] = 0xffff00;
-	tab[5] = 0x82004b;
-	tab[6] = 0xe22b8a;
 	return (tab[(n + (p ? max : 0)) % 7]);
 }
