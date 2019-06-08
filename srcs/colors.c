@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/23 12:15:16 by gedemais          #+#    #+#             */
-/*   Updated: 2019/06/08 12:16:24 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/06/08 15:59:56 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,40 @@
 
 int		ft_palette_one(int n, int max, bool p)
 {
-	static int		tab[16] = {0xff0000, 0xff1010, 0xff2010, 0xff3020, 0xff4020,
-	0xff5030, 0xff6030, 0xff7040, 0xff8040, 0xff9050, 0xffa050, 0xffb060,
-	0xffc060, 0xffd070, 0xffe070, 0xfff070};
+	static int		tab[10] = {0x00ff00,
+							0x20dd20,
+							0x40bb20,
+							0x609020,
+							0x906020,
+							0xbb4020,
+							0xff2020,
+							0xff9020,
+							0xffdd20,
+							0xffff90};
 
 	if (n == max)
 		return (0);
-	return (tab[(n + (p ? max : 0)) % 16]);
+	return (tab[(n + (p ? max : 0)) % 10]);
 }
 
 int		ft_palette_two(int n, int max, bool p)
 {
-	static int		tab[16] = {0x0000ff, 0x1010ff, 0x2010ff, 0x3020ff, 0x4020ff,
-	0x5030ff, 0x6030ff, 0x7040ff, 0x8040ff, 0x9050ff, 0xa050ff, 0xb060ff,
-	0xc060ff, 0xd070ff, 0xe070ff, 0xf070ff};
+	static int		tab[16] = {0x000000,
+								0xffffff,
+								0x050505,
+								0xfefefe,
+								0x101010,
+								0xeeeeee,
+								0x151515,
+								0xdedede,
+								0x202020,
+								0xdddddd,
+								0x252525,
+								0xcdcdcd,
+								0x303030,
+								0xcccccc,
+								0x353535,
+								0xbcbcbc};
 
 	if (n == max)
 		return (0);
@@ -36,13 +56,22 @@ int		ft_palette_two(int n, int max, bool p)
 
 int		ft_palette_three(int n, int max, bool p)
 {
-	static int		tab[16] = {0x00ff00, 0x10ff10, 0x20ff10, 0x30ff20, 0x40ff20,
-	0x50ff30, 0x60ff30, 0x70ff40, 0x80ff40, 0x90ff50, 0xa0ff50, 0xa5ff60,
-	0xb0ff60, 0xb5ff70, 0xc0ff70, 0xc5ff70};
+	static int		tab[12] = {0x0000ff,
+								0x1020ff,
+								0x2040ff,
+								0x3060ff,
+								0x4080ff,
+								0x50aaff,
+								0x60ccff,
+								0x70eeff,
+								0x80ffff,
+								0xddffaa,
+								0xeebb90,
+								0xff8080};
 
 	if (n == max)
 		return (0);
-	return (tab[(n + (p ? max : 0)) % 16]);
+	return (tab[(n + (p ? max : 0)) % 12]);
 }
 
 int		ft_palette_four(int n, int max, bool p)

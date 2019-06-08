@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/20 18:43:03 by gedemais          #+#    #+#             */
-/*   Updated: 2019/06/08 12:21:42 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/06/08 17:05:57 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int		ft_set_env(t_mlx *env)
 	env->julia_m = false;
 	env->automatic = false;
 	env->psychedelic = false;
-	env->draw.MaxIterations = ITER_BASE;
+	env->draw.maxiterations = ITER_BASE;
 	ft_place_bounds((void*)env, env->draw.mask);
 	if (!(env->mlx_ptr = mlx_init()))
 		return (-1);

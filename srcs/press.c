@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 18:50:26 by gedemais          #+#    #+#             */
-/*   Updated: 2019/06/08 12:34:56 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/06/08 15:52:01 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ void	ft_zoom(void *param, double ratio_x, double ratio_y)
 	t_mlx	*s;
 
 	s = ((t_mlx*)param);
-	s->draw.MinRe += (ratio_x / 10) * s->draw.scale;
-	s->draw.MaxRe -= ((1 - ratio_x) / 10) * s->draw.scale;
-	s->draw.MinIm += ((1 - ratio_y) / 10) * s->draw.scale;
-	s->draw.MaxIm -= (ratio_y / 10) * s->draw.scale;
+	s->draw.minre += (ratio_x / 10) * s->draw.scale;
+	s->draw.maxre -= ((1 - ratio_x) / 10) * s->draw.scale;
+	s->draw.minim += ((1 - ratio_y) / 10) * s->draw.scale;
+	s->draw.maxim -= (ratio_y / 10) * s->draw.scale;
 	if (s->automatic)
-		s->draw.MaxIterations++;
+		s->draw.maxiterations++;
 }
 
 void	ft_dezoom(void *param, double ratio_x, double ratio_y)
@@ -30,12 +30,12 @@ void	ft_dezoom(void *param, double ratio_x, double ratio_y)
 	t_mlx	*s;
 
 	s = ((t_mlx*)param);
-	s->draw.MinRe -= ratio_x / 10 * s->draw.scale;
-	s->draw.MaxRe += (1 - ratio_x) / 10 * s->draw.scale;
-	s->draw.MinIm -= (1 - ratio_y) / 10 * s->draw.scale;
-	s->draw.MaxIm += ratio_y / 10 * s->draw.scale;
+	s->draw.minre -= ratio_x / 10 * s->draw.scale;
+	s->draw.maxre += (1 - ratio_x) / 10 * s->draw.scale;
+	s->draw.minim -= (1 - ratio_y) / 10 * s->draw.scale;
+	s->draw.maxim += ratio_y / 10 * s->draw.scale;
 	if (s->automatic)
-		s->draw.MaxIterations--;
+		s->draw.maxiterations--;
 }
 
 int		ft_pos(int x, int y, void *param)
@@ -58,7 +58,7 @@ int		ft_pos(int x, int y, void *param)
 	t = clock() - t;
 	time = ((double)t) / CLOCKS_PER_SEC;
 	if (s->hud)
-		ft_hud(param, time, s->draw.MaxIterations);
+		ft_hud(param, time, s->draw.maxiterations);
 	return (1);
 }
 
@@ -77,7 +77,7 @@ int		ft_press(int button, int x, int y, void *param)
 		ft_zoom(param, ratio_x, ratio_y);
 	else if (button == 2 && s->draw.mask == JULIA)
 		s->julia_m = (s->julia_m) ? false : true;
-	else if ((button == 5) && s->draw.MaxIterations > 15)
+	else if ((button == 5) && s->draw.maxiterations > 15)
 		ft_dezoom(param, ratio_x, ratio_y);
 	t = clock();
 	ft_memset(((t_mlx*)param)->img_data, 0, HGT * WDT * 4);
@@ -85,8 +85,8 @@ int		ft_press(int button, int x, int y, void *param)
 	mlx_put_image_to_window((t_mlx*)param, s->mlx_win, s->img_ptr, 0, 0);
 	t = clock() - t;
 	time = ((double)t) / CLOCKS_PER_SEC;
-	ft_hud(s->hud ? param : NULL, time, s->draw.MaxIterations);
-	s->draw.scale = (s->draw.MaxRe - s->draw.MinRe) *
-	(double)((double)s->draw.MaxIterations / 80);
+	ft_hud(s->hud ? param : NULL, time, s->draw.maxiterations);
+	s->draw.scale = (s->draw.maxre - s->draw.minre) *
+	(double)((double)s->draw.maxiterations / 80);
 	return (1);
 }

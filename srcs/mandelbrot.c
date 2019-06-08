@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/20 19:17:04 by gedemais          #+#    #+#             */
-/*   Updated: 2019/06/08 12:26:16 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/06/08 15:51:34 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@ bool	ft_is_inside(void *param)
 	t_multi	*s;
 
 	s = ((t_multi*)param);
-	s->c_re = s->MinRe + s->x * s->Re_factor;
+	s->c_re = s->minre + s->x * s->re_factor;
 	s->z_re = s->c_re;
 	s->z_im = s->c_im;
 	s->n = 0;
-	while (s->n < s->MaxIterations)
+	while (s->n < s->maxiterations)
 	{
 		if (ft_check(param) == false)
 			return (false);
@@ -56,20 +56,20 @@ void	*ft_multibrot(void *param)
 
 	s = ((t_multi*)param);
 	loop = ((s->index + 1) * (HGT / NB_THREADS));
-	s->MaxIm = s->MinIm + (s->MaxRe - s->MinRe) * HGT / WDT;
-	s->Re_factor = (s->MaxRe - s->MinRe) / WDT;
-	s->Im_factor = (s->MaxIm - s->MinIm) / HGT;
+	s->maxim = s->minim + (s->maxre - s->minre) * HGT / WDT;
+	s->re_factor = (s->maxre - s->minre) / WDT;
+	s->im_factor = (s->maxim - s->minim) / HGT;
 	while (++s->y < loop)
 	{
 		s->x = 0;
-		s->c_im = s->MaxIm - s->y * s->Im_factor;
+		s->c_im = s->maxim - s->y * s->im_factor;
 		while (++s->x < WDT)
 		{
 			if (ft_is_inside(param))
 				continue ;
 			else
 				ft_fill_pixel(s->img, s->x, s->y, ft_palette_tree(s->n,
-					s->MaxIterations, s->palette, s->psychedelic));
+					s->maxiterations, s->palette, s->psychedelic));
 		}
 	}
 	pthread_exit(NULL);
@@ -77,19 +77,19 @@ void	*ft_multibrot(void *param)
 
 void	ft_init_thread(t_multi *thread, t_fract *draw, int i)
 {
-	thread->MaxRe = draw->MaxRe;
-	thread->MinRe = draw->MinRe;
-	thread->MaxIm = draw->MaxIm;
-	thread->MinIm = draw->MinIm;
+	thread->maxre = draw->maxre;
+	thread->minre = draw->minre;
+	thread->maxim = draw->maxim;
+	thread->minim = draw->minim;
 	thread->c_im = draw->c_im;
 	thread->c_re = draw->c_re;
 	thread->z_re = draw->z_re;
 	thread->z_re2 = draw->z_re2;
 	thread->z_im = draw->z_im;
 	thread->z_im2 = draw->z_im2;
-	thread->Re_factor = draw->Re_factor;
-	thread->Im_factor = draw->Im_factor;
-	thread->MaxIterations = draw->MaxIterations;
+	thread->re_factor = draw->re_factor;
+	thread->im_factor = draw->im_factor;
+	thread->maxiterations = draw->maxiterations;
 	thread->n = draw->n;
 	thread->x = 0;
 	thread->y = i * ((HGT - 1) / NB_THREADS);

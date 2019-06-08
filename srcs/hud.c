@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/24 16:59:52 by gedemais          #+#    #+#             */
-/*   Updated: 2019/06/08 12:16:07 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/06/08 15:59:58 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void		ft_hud(void *param, double time, int iterations)
 	t_mlx	*s;
 
 	s = ((t_mlx*)param);
+	if (!param)
+		return ;
 	ft_print_fps(param, time);
 	ft_print_iterations(param, iterations);
 	mlx_string_put(s->mlx_ptr, s->mlx_win, 10, 50, 0xFFFFFF,

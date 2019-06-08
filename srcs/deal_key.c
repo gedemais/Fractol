@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 18:39:36 by gedemais          #+#    #+#             */
-/*   Updated: 2019/06/08 14:20:51 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/06/08 17:03:09 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,18 @@ void	ft_arrows(void *param, int key, double scale)
 {
 	if (key == 123)
 	{
-		((t_mlx*)param)->draw.MinRe += 0.01 * scale;
-		((t_mlx*)param)->draw.MaxRe += 0.01 * scale;
+		((t_mlx*)param)->draw.minre += 0.01 * scale;
+		((t_mlx*)param)->draw.maxre += 0.01 * scale;
 	}
 	else if (key == 124)
 	{
-		((t_mlx*)param)->draw.MinRe -= 0.01 * scale;
-		((t_mlx*)param)->draw.MaxRe -= 0.01 * scale;
+		((t_mlx*)param)->draw.minre -= 0.01 * scale;
+		((t_mlx*)param)->draw.maxre -= 0.01 * scale;
 	}
 	if (key == 125)
-		((t_mlx*)param)->draw.MinIm += 0.01 * scale;
+		((t_mlx*)param)->draw.minim += 0.01 * scale;
 	else if (key == 126)
-		((t_mlx*)param)->draw.MinIm -= 0.01 * scale;
+		((t_mlx*)param)->draw.minim -= 0.01 * scale;
 	ft_memset(((t_mlx*)param)->img_data, 0, HGT * WDT * 4);
 }
 
@@ -35,24 +35,24 @@ void	ft_place_bounds(void *param, int mask)
 {
 	if (mask == MANDELBROT)
 	{
-		((t_mlx*)param)->draw.MaxRe = 1.865057;
-		((t_mlx*)param)->draw.MinRe = -2.198335;
-		((t_mlx*)param)->draw.MaxIm = 1.146398;
-		((t_mlx*)param)->draw.MinIm = -1.255923;
+		((t_mlx*)param)->draw.maxre = 1.865057;
+		((t_mlx*)param)->draw.minre = -2.198335;
+		((t_mlx*)param)->draw.maxim = 1.146398;
+		((t_mlx*)param)->draw.minim = -1.255923;
 	}
 	else if (mask == JULIA)
 	{
-		((t_mlx*)param)->draw.MaxRe = 1.957858;
-		((t_mlx*)param)->draw.MinRe = -1.979132;
-		((t_mlx*)param)->draw.MaxIm = 1.146398;
-		((t_mlx*)param)->draw.MinIm = -1.227841;
+		((t_mlx*)param)->draw.maxre = 1.957858;
+		((t_mlx*)param)->draw.minre = -1.979132;
+		((t_mlx*)param)->draw.maxim = 1.146398;
+		((t_mlx*)param)->draw.minim = -1.227841;
 	}
 	else if (mask == BURNINGSHIP)
 	{
-		((t_mlx*)param)->draw.MaxRe = 1.910770;
-		((t_mlx*)param)->draw.MaxIm = 1.146398;
-		((t_mlx*)param)->draw.MinRe = -2.152622;
-		((t_mlx*)param)->draw.MinIm = -1.139259;
+		((t_mlx*)param)->draw.maxre = 1.910770;
+		((t_mlx*)param)->draw.maxim = 1.146398;
+		((t_mlx*)param)->draw.minre = -2.152622;
+		((t_mlx*)param)->draw.minim = -0.759259;
 	}
 }
 
@@ -81,7 +81,7 @@ int		ft_keys_tree(void *param, int key)
 	else if (key == 53)
 		ft_exit();
 	else if (key == 34)
-		s->draw.MaxIterations++;
+		s->draw.maxiterations++;
 	else if (key == 8)
 		*ft_palette() = (*ft_palette() < NB_PALETTES) ? *ft_palette() + 1 : 0;
 	else if (key == 4)
@@ -117,8 +117,8 @@ int		ft_deal_key(int key, void *param)
 	t = clock() - t;
 	time = ((double)t) / CLOCKS_PER_SEC;
 	if (s->hud == true)
-		ft_hud(param, time, s->draw.MaxIterations);
-	s->draw.scale = (s->draw.MaxRe - s->draw.MinRe) *
-	(double)((double)s->draw.MaxIterations / 80);
+		ft_hud(param, time, s->draw.maxiterations);
+	s->draw.scale = (s->draw.maxre - s->draw.minre) *
+	(double)((double)s->draw.maxiterations / 80);
 	return (1);
 }

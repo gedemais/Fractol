@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/20 18:50:23 by gedemais          #+#    #+#             */
-/*   Updated: 2019/06/08 14:28:13 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/06/08 15:59:58 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,19 +52,19 @@ typedef struct	s_multi
 	pthread_t	thread;
 	int			index;
 	char		*img;
-	double		MaxRe;
-	double		MinRe;
-	double		MaxIm;
-	double		MinIm;
+	double		maxre;
+	double		minre;
+	double		maxim;
+	double		minim;
 	double		c_im;
 	double		c_re;
 	double		z_re;
 	double		z_re2;
 	double		z_im;
 	double		z_im2;
-	double		Re_factor;
-	double		Im_factor;
-	unsigned	MaxIterations;
+	double		re_factor;
+	double		im_factor;
+	unsigned	maxiterations;
 	int			n;
 	int			x;
 	int			y;
@@ -76,19 +76,19 @@ typedef struct	s_multi
 
 typedef struct	s_fract
 {
-	double		MaxRe;
-	double		MinRe;
-	double		MaxIm;
-	double		MinIm;
+	double		maxre;
+	double		minre;
+	double		maxim;
+	double		minim;
 	double		c_im;
 	double		c_re;
 	double		z_re;
 	double		z_re2;
 	double		z_im;
 	double		z_im2;
-	double		Re_factor;
-	double		Im_factor;
-	unsigned	MaxIterations;
+	double		re_factor;
+	double		im_factor;
+	unsigned	maxiterations;
 	int			n;
 	int			x;
 	int			y;
