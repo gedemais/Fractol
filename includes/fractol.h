@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/20 18:50:23 by gedemais          #+#    #+#             */
-/*   Updated: 2019/06/04 19:08:49 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/06/08 12:29:36 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,38 +45,7 @@
 # include <pthread.h>
 # include <stdio.h>
 # include <dirent.h>
-#include "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/OpenCL.framework/Versions/A/Headers/cl.h"
 # include <sys/types.h>
-
-typedef struct		s_multiclear
-{
-	pthread_t		thread;
-	char			*img;
-	int				pos;
-	int				len;
-}					t_multiclear;
-
-typedef struct		s_opencl
-{
-	cl_device_id		device;
-	cl_context			context;
-	cl_command_queue	queue;
-	cl_program			program;
-	cl_kernel			kernel;
-	cl_mem				buffer;
-	char				**sources;
-	int					index;
-}					t_opencl;
-
-typedef struct		s_kernel
-{
-	DIR				*d;
-	struct dirent	*dir;
-	char			*f_path;
-	int				len;
-	int				fd;
-	int				i;
-}					t_kernel;
 
 typedef struct	s_multi
 {
@@ -158,8 +127,7 @@ int		ft_palette_three(int n, int max, bool psychedelic);
 int		ft_palette_four(int n, int max, bool psychedelic);
 int		ft_palette_five(int n, int max, bool psychedelic);
 
-int		ft_count_files(char *path);
-char	**ft_load_kernels(char *path);
+void	ft_place_bounds(void *param, int mask);
 
 int	ft_exit(void);
 double	ft_sq(double nb);

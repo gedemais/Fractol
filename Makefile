@@ -6,7 +6,7 @@
 #    By: gedemais <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/20 18:40:16 by gedemais          #+#    #+#              #
-#    Updated: 2019/06/04 18:45:38 by gedemais         ###   ########.fr        #
+#    Updated: 2019/06/08 12:20:54 by gedemais         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,20 +14,20 @@ CC = gcc
 
 CFLAGS = -Wall -Werror -Wextra
 
-OFLAGS = -Os -Ofast -march=native
+OFLAGS = -O3 -Ofast -march=native
 
 INC = includes/fractol.h
 
-SRCS_NAME = 	main.c\
-		mandelbrot.c\
-		mlx_fts_1.c\
-		colors.c\
-		hud.c\
-		singletons.c\
-		deal_key.c\
-		press.c\
-		utils.c\
-		parsing.c
+SRCS_NAME = main.c\
+			mandelbrot.c\
+			mlx_fts_1.c\
+			colors.c\
+			hud.c\
+			singletons.c\
+			deal_key.c\
+			press.c\
+			parsing.c\
+			utils.c
 
 SRCS_PATH = srcs/
 

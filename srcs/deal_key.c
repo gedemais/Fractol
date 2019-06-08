@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 18:39:36 by gedemais          #+#    #+#             */
-/*   Updated: 2019/06/04 19:02:47 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/06/08 12:36:25 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,22 +31,45 @@ void	ft_arrows(void *param, int key, double scale)
 	ft_memset(((t_mlx*)param)->img_data, 0, HGT * WDT * 4);
 }
 
+void	ft_place_bounds(void *param, int mask)
+{
+	if (mask == MANDELBROT)
+	{
+		((t_mlx*)param)->draw.MaxRe = 1.910770;
+		((t_mlx*)param)->draw.MaxIm = 1.146398;
+		((t_mlx*)param)->draw.MinRe = -2.152622;
+		((t_mlx*)param)->draw.MinIm = -1.139259;
+	}
+	else if (mask == JULIA)
+	{
+		((t_mlx*)param)->draw.MinRe = -2.008659;
+		((t_mlx*)param)->draw.MaxRe = 1.928331;
+		((t_mlx*)param)->draw.MaxIm = 1.146398;
+		((t_mlx*)param)->draw.MinIm = -1.080204;
+	}
+	else if (mask == BURNINGSHIP)
+	{
+		((t_mlx*)param)->draw.MaxRe = 1.910770;
+		((t_mlx*)param)->draw.MaxIm = 1.146398;
+		((t_mlx*)param)->draw.MinRe = -2.152622;
+		((t_mlx*)param)->draw.MinIm = -1.139259;
+	}
+}
+
 int		ft_switch_fractal(void *param, int mask)
 {
-	if (mask & MANDELBROT)
+	if (mask == MANDELBROT)
 		mask = JULIA;
-	else if (mask & JULIA)
+	else if (mask == JULIA)
+		mask = BURNINGSHIP;
+	else if (mask == BURNINGSHIP)
 		mask = MANDELBROT;
 	else
 		return (0);
-	((t_mlx*)param)->draw.MaxRe = 1.910770;
-	((t_mlx*)param)->draw.MaxIm = 1.146398;
-	((t_mlx*)param)->draw.MinRe = -2.152622;
-	((t_mlx*)param)->draw.MinIm = -1.139259;
+	ft_place_bounds(param, mask);
 	ft_memset(((t_mlx*)param)->img_data, 0, HGT * WDT * 4);
 	return (mask);
 }
-
 
 int		ft_keys_tree(void *param, int key)
 {

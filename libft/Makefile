@@ -6,7 +6,7 @@
 #    By: gedemais <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/05 17:34:45 by gedemais          #+#    #+#              #
-#    Updated: 2019/06/03 20:27:54 by gedemais         ###   ########.fr        #
+#    Updated: 2019/06/08 12:06:06 by gedemais         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ CC = @gcc
 
 FLAGS = -Wall -Werror -Wextra
 
-OFLAGS = -Os -Ofast -march=native
+OFLAGS = -O3 -Ofast -march=native
 
 SRCS  =	ft_atoi.c \
 		ft_bzero.c \

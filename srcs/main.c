@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/20 18:43:03 by gedemais          #+#    #+#             */
-/*   Updated: 2019/06/04 19:09:35 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/06/08 12:21:42 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,11 @@ int		ft_set_env(t_mlx *env)
 {
 	env->draw.scale = 1;
 	env->hud = true;
-	env->julia_m = true;
+	env->julia_m = false;
 	env->automatic = false;
 	env->psychedelic = false;
 	env->draw.MaxIterations = ITER_BASE;
-	env->draw.MaxRe = 1.910770;
-	env->draw.MaxIm = 1.146398;
-	env->draw.MinRe = -2.152622;
-	env->draw.MinIm = -1.139259;
+	ft_place_bounds((void*)env, env->draw.mask);
 	if (!(env->mlx_ptr = mlx_init()))
 		return (-1);
 	if (!(env->mlx_win = mlx_new_window(env->mlx_ptr, WDT, HGT, "Fractol")))
@@ -60,7 +57,7 @@ int		main(int argc, char **argv)
 {
 	if (argc != 2)
 	{
-		ft_putstr_fd("Usage : ./fractol [fractal name]\n", 2);
+		ft_putstr_fd("Usage : ./fractol [Mandelbrot/Julia/Burningship]\n", 2);
 		return (1);
 	}
 	else if (ft_fractol(argv[1]) == -1)
