@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 18:28:38 by gedemais          #+#    #+#             */
-/*   Updated: 2019/06/08 15:53:11 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/06/08 18:51:22 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ double	ft_fractals_tree(void *param, char w)
 	s = ((t_multi*)param);
 	if (s->mask == MANDELBROT)
 	{
-		tx = ((s->z_re + s->z_re)) * s->z_im;
+		tx = (s->z_re + s->z_re) * s->z_im;
 		ty = s->z_re2 - s->z_im2;
 		return ((w == 'x') ? (tx + s->c_im) : ty + s->c_re);
 	}

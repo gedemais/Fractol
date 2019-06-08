@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/20 18:50:23 by gedemais          #+#    #+#             */
-/*   Updated: 2019/06/08 15:59:58 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/06/08 20:53:22 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,22 @@
 
 # include "../libft/libft.h"
 # include "mlx.h"
+# include "/System/Library/Frameworks/OpenCL.framework/Versions/A/Headers/cl.h"
 # include <stdbool.h>
 # include <pthread.h>
 # include <stdio.h>
 # include <dirent.h>
 # include <sys/types.h>
+
+typedef struct			s_opencl
+{
+	cl_device_id		device;
+	cl_context			context;
+	cl_command_queue	queue;
+	cl_program			program;
+	cl_kernel			kernel;
+	cl_mem				buffer;
+}						t_opencl;
 
 typedef struct	s_multi
 {
@@ -111,6 +122,7 @@ typedef struct	s_mlx
 	bool		psychedelic;
 	bool		julia_m;
 	t_fract		draw;
+	t_opencl	s;
 }				t_mlx;
 
 int				ft_name_tree(char *name);
@@ -139,5 +151,8 @@ int				ft_pos(int x, int y, void *param);
 double			*julia_x(void);
 double			*julia_y(void);
 int				*ft_palette(void);
+
+int				ft_init_opencl(t_opencl *s, char *img);
+char			*ft_run_kernel(t_opencl	*s, char *img);
 
 #endif

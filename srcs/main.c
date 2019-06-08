@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/20 18:43:03 by gedemais          #+#    #+#             */
-/*   Updated: 2019/06/08 17:05:57 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/06/08 20:53:28 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		ft_set_env(t_mlx *env)
 	ft_place_bounds((void*)env, env->draw.mask);
 	if (!(env->mlx_ptr = mlx_init()))
 		return (-1);
-	if (!(env->mlx_win = mlx_new_window(env->mlx_ptr, WDT, HGT, "Fractol")))
+	if (!(env->mlx_win = mlx_new_window(env->mlx_ptr, WDT, HGT, "Fract'ol")))
 		return (-1);
 	if (!(env->img_ptr = mlx_new_image(env->mlx_ptr, WDT, HGT)))
 		return (-1);
@@ -40,6 +40,8 @@ int		ft_fractol(char *name)
 	int		mask;
 
 	if ((env.draw.mask = ft_name_tree(name)) == -1)
+		return (-1);
+	if (ft_init_opencl(&(env.s), env.img_data) == -1)
 		return (-1);
 	if (ft_set_env(&env) == -1)
 		return (-1);

@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/20 19:17:04 by gedemais          #+#    #+#             */
-/*   Updated: 2019/06/08 15:51:34 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/06/08 19:18:49 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	*ft_multibrot(void *param)
 	s->im_factor = (s->maxim - s->minim) / HGT;
 	while (++s->y < loop)
 	{
-		s->x = 0;
+		s->x = -1;
 		s->c_im = s->maxim - s->y * s->im_factor;
 		while (++s->x < WDT)
 		{

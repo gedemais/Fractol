@@ -6,7 +6,7 @@
 #    By: gedemais <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/20 18:40:16 by gedemais          #+#    #+#              #
-#    Updated: 2019/06/08 15:59:45 by gedemais         ###   ########.fr        #
+#    Updated: 2019/06/08 20:41:51 by gedemais         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ SRCS_NAME = main.c\
 			singletons.c\
 			deal_key.c\
 			press.c\
+			opencl.c\
 			parsing.c\
 			utils.c
 
