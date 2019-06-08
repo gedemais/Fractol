@@ -6,7 +6,7 @@
 #    By: gedemais <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/20 18:40:16 by gedemais          #+#    #+#              #
-#    Updated: 2019/06/08 12:20:54 by gedemais         ###   ########.fr        #
+#    Updated: 2019/06/08 13:06:04 by gedemais         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,13 +35,15 @@ SRCS = $(addprefix $(SRCS_PATH), $(SRCS_NAME))
 
 OBJS = $(SRCS_NAME:.c=.o)
 
+LIB_PATH = libft/
+
 LIB = libft/libft.a
 
 NAME = fractol_du_sale
 
-all : $(NAME)
+all : $(LIB) $(NAME) $(INC)
 
-$(NAME) : $(INC) $(LIB) $(SRCS)
+$(NAME) : $(LIB_PATH) $(SRCS)
 	@echo "Making $(RED)fractol_du_sale...$(DEF)"
 	$(CC) $(FLAGS) $(OFLAGS) -o $(NAME) -I minilibx_macos/ $(SRCS) -L minilibx_macos/ minilibx_macos/libmlx.a -framework OpenGL -framework AppKit -lpthread $(LIB)
 	@echo "$(GRE)Done !$(DEF)"

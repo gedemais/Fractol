@@ -6,7 +6,7 @@
 #    By: gedemais <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/05 17:34:45 by gedemais          #+#    #+#              #
-#    Updated: 2019/06/08 12:06:06 by gedemais         ###   ########.fr        #
+#    Updated: 2019/06/08 13:03:26 by gedemais         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,6 @@ CYA = \033[36m
 WHI = \033[37m
 ORG = \033[1;31m
 
-
 NAME = libft.a
 
 CC = @gcc
@@ -36,6 +35,7 @@ FLAGS = -Wall -Werror -Wextra
 OFLAGS = -O3 -Ofast -march=native
 
 SRCS  =	ft_atoi.c \
+		ft_abs.c\
 		ft_bzero.c \
 		ft_isalnum.c \
 		ft_isalpha.c \

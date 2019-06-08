@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/20 18:50:23 by gedemais          #+#    #+#             */
-/*   Updated: 2019/06/08 12:29:36 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/06/08 14:28:13 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # define PUT8 ft_putstr("There\n");
 # define PUT9 ft_putstr("There\n");
 
-# define HGT 600
+# define HGT 672
 # define WDT 1080
 # define KEY_PRESS 2
 # define KEY_PRESS_MASK (1L<<0)
@@ -54,17 +54,17 @@ typedef struct	s_multi
 	char		*img;
 	double		MaxRe;
 	double		MinRe;
-	double 		MaxIm;
+	double		MaxIm;
 	double		MinIm;
-	double 		c_im;
-	double 		c_re;
-	double 		z_re;
-	double 		z_re2;
-	double 		z_im;
-	double 		z_im2;
-	double 		Re_factor;
-	double 		Im_factor;
-	unsigned 	MaxIterations;
+	double		c_im;
+	double		c_re;
+	double		z_re;
+	double		z_re2;
+	double		z_im;
+	double		z_im2;
+	double		Re_factor;
+	double		Im_factor;
+	unsigned	MaxIterations;
 	int			n;
 	int			x;
 	int			y;
@@ -78,17 +78,17 @@ typedef struct	s_fract
 {
 	double		MaxRe;
 	double		MinRe;
-	double 		MaxIm;
+	double		MaxIm;
 	double		MinIm;
-	double 		c_im;
-	double 		c_re;
-	double 		z_re;
-	double 		z_re2;
-	double 		z_im;
-	double 		z_im2;
-	double 		Re_factor;
-	double 		Im_factor;
-	unsigned 	MaxIterations;
+	double		c_im;
+	double		c_re;
+	double		z_re;
+	double		z_re2;
+	double		z_im;
+	double		z_im2;
+	double		Re_factor;
+	double		Im_factor;
+	unsigned	MaxIterations;
 	int			n;
 	int			x;
 	int			y;
@@ -99,7 +99,6 @@ typedef struct	s_fract
 
 typedef struct	s_mlx
 {
-
 	void		*mlx_ptr;
 	void		*mlx_win;
 	void		*img_ptr;
@@ -114,31 +113,31 @@ typedef struct	s_mlx
 	t_fract		draw;
 }				t_mlx;
 
-int		ft_name_tree(char *name);
-void	ft_fill_pixel(char *img_str, int x, int y, int color);
-char	*ft_mandelbrot(char *img, int palette, t_fract *draw);
+int				ft_name_tree(char *name);
+void			ft_fill_pixel(char *img_str, int x, int y, int color);
+char			*ft_mandelbrot(char *img, int palette, t_fract *draw);
 
-void	ft_hud(void *param, double time, int iterations);
+void			ft_hud(void *param, double time, int iterations);
 
+int				ft_palette_one(int n, int max, bool psychedelic);
+int				ft_palette_two(int n, int max, bool psychedelic);
+int				ft_palette_three(int n, int max, bool psychedelic);
+int				ft_palette_four(int n, int max, bool psychedelic);
+int				ft_palette_five(int n, int max, bool psychedelic);
 
-int		ft_palette_one(int n, int max, bool psychedelic);
-int		ft_palette_two(int n, int max, bool psychedelic);
-int		ft_palette_three(int n, int max, bool psychedelic);
-int		ft_palette_four(int n, int max, bool psychedelic);
-int		ft_palette_five(int n, int max, bool psychedelic);
+void			ft_place_bounds(void *param, int mask);
 
-void	ft_place_bounds(void *param, int mask);
+int				ft_exit(void);
+double			ft_sq(double nb);
+int				ft_palette_tree(int n, int max, int palette, bool psychedelic);
+double			ft_fractals_tree(void *param, char w);
+int				ft_deal_key(int key, void *param);
 
-int	ft_exit(void);
-double	ft_sq(double nb);
-int		ft_palette_tree(int n, int max, int palette, bool psychedelic);
-double	ft_fractals_tree(void *param, char w);
-int		ft_deal_key(int key, void *param);
+int				ft_press(int button, int x, int y, void *param);
+int				ft_pos(int x, int y, void *param);
 
-int 	ft_press(int button, int x, int y, void *param);
-int 	ft_pos(int x, int y, void *param);
+double			*julia_x(void);
+double			*julia_y(void);
+int				*ft_palette(void);
 
-double	*julia_x(void);
-double	*julia_y(void);
-int		*ft_palette(void);
 #endif

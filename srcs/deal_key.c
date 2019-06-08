@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 18:39:36 by gedemais          #+#    #+#             */
-/*   Updated: 2019/06/08 12:36:25 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/06/08 14:20:51 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,17 @@ void	ft_place_bounds(void *param, int mask)
 {
 	if (mask == MANDELBROT)
 	{
-		((t_mlx*)param)->draw.MaxRe = 1.910770;
+		((t_mlx*)param)->draw.MaxRe = 1.865057;
+		((t_mlx*)param)->draw.MinRe = -2.198335;
 		((t_mlx*)param)->draw.MaxIm = 1.146398;
-		((t_mlx*)param)->draw.MinRe = -2.152622;
-		((t_mlx*)param)->draw.MinIm = -1.139259;
+		((t_mlx*)param)->draw.MinIm = -1.255923;
 	}
 	else if (mask == JULIA)
 	{
-		((t_mlx*)param)->draw.MinRe = -2.008659;
-		((t_mlx*)param)->draw.MaxRe = 1.928331;
+		((t_mlx*)param)->draw.MaxRe = 1.957858;
+		((t_mlx*)param)->draw.MinRe = -1.979132;
 		((t_mlx*)param)->draw.MaxIm = 1.146398;
-		((t_mlx*)param)->draw.MinIm = -1.080204;
+		((t_mlx*)param)->draw.MinIm = -1.227841;
 	}
 	else if (mask == BURNINGSHIP)
 	{
@@ -104,7 +104,7 @@ int		ft_deal_key(int key, void *param)
 {
 	t_mlx			*s;
 	clock_t			t;
-	double 			time;
+	double			time;
 	static int		palette = 0;
 
 	s = ((t_mlx*)param);
@@ -114,10 +114,11 @@ int		ft_deal_key(int key, void *param)
 	ft_memset(s->img_data, 0, HGT * WDT * 4);
 	s->img_data = ft_mandelbrot(s->img_data, *ft_palette(), &s->draw);
 	mlx_put_image_to_window(s, s->mlx_win, s->img_ptr, 0, 0);
-	t = clock() - t; 
+	t = clock() - t;
 	time = ((double)t) / CLOCKS_PER_SEC;
 	if (s->hud == true)
 		ft_hud(param, time, s->draw.MaxIterations);
-	s->draw.scale = (s->draw.MaxRe - s->draw.MinRe) * (double)((double)s->draw.MaxIterations / 80);
+	s->draw.scale = (s->draw.MaxRe - s->draw.MinRe) *
+	(double)((double)s->draw.MaxIterations / 80);
 	return (1);
 }
