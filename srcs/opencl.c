@@ -63,6 +63,7 @@ char	*ft_run_kernel(t_mlx *env, t_opencl *s, char *img)
 	size_t		global_dimensions[] = {HGT, WDT};
 	int		wdt;
 	int		hgt;
+	int			p;
 	float		juliax;
 	float		juliay;
 
@@ -70,12 +71,13 @@ char	*ft_run_kernel(t_mlx *env, t_opencl *s, char *img)
 	juliay = (float)*julia_y();
 	wdt = WDT;
 	hgt = HGT;
+	p = env->psychedelic ? 1 : 0;
 	clSetKernelArg(s->kernel, 0, sizeof(cl_mem), (void*)&s->buffer);
 	clSetKernelArg(s->kernel, 1, sizeof(int), (void*)&wdt);
 	clSetKernelArg(s->kernel, 2, sizeof(int), (void*)&hgt);
 	clSetKernelArg(s->kernel, 3, sizeof(t_fract), (void*)&env->draw);
 	clSetKernelArg(s->kernel, 4, sizeof(int), (void*)&env->draw.palette);
-	clSetKernelArg(s->kernel, 5, sizeof(bool), (void*)&env->psychedelic);
+	clSetKernelArg(s->kernel, 5, sizeof(int), (void*)&p);
 	clSetKernelArg(s->kernel, 6, sizeof(int), (void*)&env->draw.mask);
 	clSetKernelArg(s->kernel, 7, sizeof(float), (void*)&juliax);
 	clSetKernelArg(s->kernel, 8, sizeof(float), (void*)&juliay);

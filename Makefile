@@ -27,7 +27,6 @@ SRCS_NAME = main.c\
 			deal_key.c\
 			press.c\
 			parsing.c\
-			opencl.c\
 			utils.c
 
 SRCS_PATH = srcs/
@@ -59,7 +58,7 @@ all : $(MLX_PATH) $(LIB) $(NAME) $(INC)
 
 $(NAME) : $(MLX) $(LIB_PATH) $(SRCS)
 	@echo "Making $(RED)fractol_du_sale...$(DEF)"
-	@$(CC) $(FLAGS) -o $(NAME) -I minilibx_macos/ $(SRCS) -L minilibx_macos/ minilibx_macos/libmlx.a -framework OpenCL -framework OpenGL -framework AppKit -lpthread $(LIB)
+	@$(CC) $(FLAGS) $(OFLAGS) -o $(NAME) -I minilibx_macos/ $(SRCS) -L minilibx_macos/ minilibx_macos/libmlx.a -framework OpenGL -framework AppKit -lpthread $(LIB)
 	@echo "$(GRE)Done !$(DEF)"
 
 $(LIB) :

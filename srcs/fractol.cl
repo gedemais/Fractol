@@ -33,7 +33,7 @@ typedef struct	s_fract
 	int			y;
 	float		scale;
 	int			palette;
-	bool		psychedelic;
+	int			psychedelic;
 	int			mask;
 }		t_fract;
 
@@ -41,7 +41,7 @@ typedef struct	s_fract
 
 double		ft_sq(double nb);
 double		ft_abs(double nb);
-void		ft_fill_pixel(int *img_str, int x, int y, int color, int wdt);
+void		ft_fill_pixel(__global char *img, int x, int y, int color, int wdt);
 int		ft_check(t_complex *c, t_complex *z);
 int		ft_palette_one(int n, int max, bool p);
 int		ft_palette_two(int n, int max, bool p);
@@ -166,15 +166,17 @@ int		ft_palette_tree(int n, int max, int palette, bool psychedelic)
 		return (0);
 }
 
-void	ft_fill_pixel(int *img_str, int x, int y, int color, int wdt)
+void	ft_fill_pixel(__global char *buff, int x, int y, int color, int wdt)
 {
 	int		pos;
 
-	pos = ((y - 1) * wdt + x);
-	img_str[pos] = color;
+	pos = ((y - 1) * wdt + x) * 4;
+	buff[pos] = color >> 16 & 255;
+	buff[pos + 1] = color >> 8 & 255;
+	buff[pos + 2] = color & 255;
 }
 
-__kernel void fractol(__global char *buff, int wdt, int hgt, t_fract s, int palette, bool p, int mask, float julia_x, float julia_y)
+__kernel void fractol(__global char *buff, int wdt, int hgt, t_fract s, int palette, int p, int mask, float julia_x, float julia_y)
 {
 	s.x = get_global_id(1);
 	s.y = get_global_id(0);
@@ -193,12 +195,12 @@ __kernel void fractol(__global char *buff, int wdt, int hgt, t_fract s, int pale
 		s.z_im2 = s.z_im * s.z_im;
 		if (s.z_re2 + s.z_im2 > 4)
 		{
-			ft_fill_pixel((int*)buff, s.x, s.y, ft_palette_tree(s.n, s.maxiterations, palette, p), wdt);
+			ft_fill_pixel(buff, s.x, s.y, ft_palette_tree(s.n, s.maxiterations, palette, p), wdt);
 			return ;
 		}
 		s.z_im = ft_fractals_tree(&s, mask, 'x', julia_x, julia_x);
 		s.z_re = ft_fractals_tree(&s, mask, 'y', julia_x, julia_y);
 		s.n++;
 	}
-	ft_fill_pixel((int*)buff, s.x, s.y, 0, wdt);
+	ft_fill_pixel(buff, s.x, s.y, 0, wdt);
 }
