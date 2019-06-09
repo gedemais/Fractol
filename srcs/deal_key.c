@@ -83,7 +83,7 @@ int		ft_keys_tree(void *param, int key)
 	else if (key == 34)
 		s->draw.maxiterations++;
 	else if (key == 8)
-		*ft_palette() = (*ft_palette() < NB_PALETTES) ? *ft_palette() + 1 : 0;
+		s->draw.palette = (s->draw.palette < NB_PALETTES) ? s->draw.palette + 1 : 0;
 	else if (key == 4)
 		s->hud = (s->hud == false) ? true : false;
 	else if (key == 0)
@@ -105,14 +105,12 @@ int		ft_deal_key(int key, void *param)
 	t_mlx			*s;
 	clock_t			t;
 	double			time;
-	static int		palette = 0;
 
 	s = ((t_mlx*)param);
 	if (ft_keys_tree(param, key) == 0)
 		return (1);
 	t = clock();
-	ft_memset(s->img_data, 0, HGT * WDT * 4);
-	s->img_data = ft_mandelbrot(s->img_data, *ft_palette(), &s->draw);
+	s->img_data = ft_run_kernel(s, &s->s, s->img_data);
 	mlx_put_image_to_window(s, s->mlx_win, s->img_ptr, 0, 0);
 	t = clock() - t;
 	time = ((double)t) / CLOCKS_PER_SEC;

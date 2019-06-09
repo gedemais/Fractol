@@ -15,7 +15,7 @@
 
 int		ft_set_env(t_mlx *env)
 {
-	env->draw.scale = 1;
+	env->draw.scale = 2;
 	env->hud = true;
 	env->julia_m = false;
 	env->automatic = false;
@@ -45,7 +45,8 @@ int		ft_fractol(char *name)
 		return (-1);
 	if (ft_set_env(&env) == -1)
 		return (-1);
-	env.img_data = ft_mandelbrot(env.img_data, *ft_palette(), &(env.draw));
+	env.draw.palette = 0;
+	env.img_data = ft_run_kernel(&env, &env.s, env.img_data);
 	mlx_put_image_to_window(&env, env.mlx_win, env.img_ptr, 0, 0);
 	mlx_hook(env.mlx_win, KEY_PRESS, KEY_PRESS_MASK, ft_deal_key, &env);
 	mlx_hook(env.mlx_win, 4, (1L << 2), ft_press, &env);

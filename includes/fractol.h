@@ -24,8 +24,8 @@
 # define PUT8 ft_putstr("There\n");
 # define PUT9 ft_putstr("There\n");
 
-# define HGT 672
-# define WDT 1080
+# define HGT 800
+# define WDT 1440
 # define KEY_PRESS 2
 # define KEY_PRESS_MASK (1L<<0)
 # define ITER_BASE 30
@@ -47,6 +47,12 @@
 # include <stdio.h>
 # include <dirent.h>
 # include <sys/types.h>
+
+typedef struct			s_complex
+{
+	double	im;
+	double	re;
+}				t_complex;
 
 typedef struct			s_opencl
 {
@@ -87,23 +93,24 @@ typedef struct	s_multi
 
 typedef struct	s_fract
 {
-	double		maxre;
-	double		minre;
-	double		maxim;
-	double		minim;
-	double		c_im;
-	double		c_re;
-	double		z_re;
-	double		z_re2;
-	double		z_im;
-	double		z_im2;
-	double		re_factor;
-	double		im_factor;
+	float		maxre;
+	float		minre;
+	float		maxim;
+	float		minim;
+	float		c_im;
+	float		c_re;
+	float		z_re;
+	float		z_re2;
+	float		z_im;
+	float		z_im2;
+	float		re_factor;
+	float		im_factor;
 	unsigned	maxiterations;
-	int			n;
-	int			x;
-	int			y;
+	int		n;
+	int		x;
+	int		y;
 	float		scale;
+	int	palette;
 	bool		psychedelic;
 	int			mask;
 }				t_fract;
@@ -138,6 +145,7 @@ int				ft_palette_four(int n, int max, bool psychedelic);
 int				ft_palette_five(int n, int max, bool psychedelic);
 
 void			ft_place_bounds(void *param, int mask);
+char			*ft_clear_image(void *param, char *img_data);
 
 int				ft_exit(void);
 double			ft_sq(double nb);
@@ -150,9 +158,8 @@ int				ft_pos(int x, int y, void *param);
 
 double			*julia_x(void);
 double			*julia_y(void);
-int				*ft_palette(void);
 
 int				ft_init_opencl(t_opencl *s, char *img);
-char			*ft_run_kernel(t_opencl	*s, char *img);
+char				*ft_run_kernel(t_mlx *env, t_opencl *s, char *img);
 
 #endif

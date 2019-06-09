@@ -22,6 +22,13 @@ double	ft_sq(double nb)
 	return (nb * nb);
 }
 
+char		*ft_clear_image(void *param, char *img_data)
+{
+	ft_memset(((t_mlx*)param)->img_data, 0, HGT * WDT * 4);
+	mlx_put_image_to_window((t_mlx*)param, ((t_mlx*)param)->mlx_win, ((t_mlx*)param)->img_ptr, 0, 0);
+	return (img_data);
+}
+
 int		ft_palette_tree(int n, int max, int palette, bool psychedelic)
 {
 	if (palette == 0)

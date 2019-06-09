@@ -25,10 +25,3 @@ double	*julia_y(void)
 
 	return (&y);
 }
-
-int		*ft_palette(void)
-{
-	static int		val = 0;
-
-	return (&val);
-}
