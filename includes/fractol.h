@@ -93,18 +93,18 @@ typedef struct	s_multi
 
 typedef struct	s_fract
 {
-	float		maxre;
-	float		minre;
-	float		maxim;
-	float		minim;
-	float		c_im;
-	float		c_re;
-	float		z_re;
-	float		z_re2;
-	float		z_im;
-	float		z_im2;
-	float		re_factor;
-	float		im_factor;
+	double		maxre;
+	double		minre;
+	double		maxim;
+	double		minim;
+	double		c_im;
+	double		c_re;
+	double		z_re;
+	double		z_re2;
+	double		z_im;
+	double		z_im2;
+	double		re_factor;
+	double		im_factor;
 	unsigned	maxiterations;
 	int		n;
 	int		x;
