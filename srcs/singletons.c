@@ -25,3 +25,10 @@ double	*julia_y(void)
 
 	return (&y);
 }
+
+int	*gpu(void)
+{
+	static int	val = 0;
+
+	return (&val);
+}

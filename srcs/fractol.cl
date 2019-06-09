@@ -14,18 +14,18 @@ typedef struct	s_complex
 
 typedef struct	s_fract
 {
-	double		maxre;
-	double		minre;
-	double		maxim;
-	double		minim;
-	double		c_im;
-	double		c_re;
-	double		z_re;
-	double		z_re2;
-	double		z_im;
-	double		z_im2;
-	double		re_factor;
-	double		im_factor;
+	float		maxre;
+	float		minre;
+	float		maxim;
+	float		minim;
+	float		c_im;
+	float		c_re;
+	float		z_re;
+	float		z_re2;
+	float		z_im;
+	float		z_im2;
+	float		re_factor;
+	float		im_factor;
 	unsigned	maxiterations;
 	unsigned int	test;
 	int			n;
@@ -202,5 +202,5 @@ __kernel void fractol(__global char *buff, int wdt, int hgt, t_fract s, int pale
 		s.z_re = ft_fractals_tree(&s, mask, 'y', julia_x, julia_y);
 		s.n++;
 	}
-	ft_fill_pixel(buff, s.x, s.y, 0, wdt);
+			ft_fill_pixel(buff, s.x, s.y, 0, wdt);
 }

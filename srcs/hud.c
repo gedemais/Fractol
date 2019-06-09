@@ -53,4 +53,6 @@ void		ft_hud(void *param, double time, int iterations)
 			"Psychedelic mode : p");
 	mlx_string_put(s->mlx_ptr, s->mlx_win, 10, 130, 0xFFFFFF,
 			"Switch fractals : Space");
+	mlx_string_put(s->mlx_ptr, s->mlx_win, 10, 150, 0xFFFFFF,
+			"Switch GPU / CPU : g");
 }

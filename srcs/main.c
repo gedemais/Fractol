@@ -45,8 +45,9 @@ int		ft_fractol(char *name)
 		return (-1);
 	if (ft_set_env(&env) == -1)
 		return (-1);
+	*gpu() = 0;
 	env.draw.palette = 0;
-	env.img_data = ft_run_kernel(&env, &env.s, env.img_data);
+	env.img_data = *gpu() ? ft_run_kernel(&env, &env.s, ft_memset(env.img_data, 0, sizeof(char) * HGT * WDT * 4)) : ft_mandelbrot(ft_memset(env.img_data, 0, sizeof(char) * HGT * WDT * 4), env.draw.palette, &env.draw);
 	mlx_put_image_to_window(&env, env.mlx_win, env.img_ptr, 0, 0);
 	mlx_hook(env.mlx_win, KEY_PRESS, KEY_PRESS_MASK, ft_deal_key, &env);
 	mlx_hook(env.mlx_win, 4, (1L << 2), ft_press, &env);

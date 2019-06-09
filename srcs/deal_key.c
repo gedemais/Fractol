@@ -107,13 +107,15 @@ int		ft_deal_key(int key, void *param)
 	double			time;
 
 	s = ((t_mlx*)param);
+	if (key == 5)
+		*gpu() = (*gpu() == 1) ? 0 : 1;
 	if (ft_keys_tree(param, key) == 0)
 		return (1);
 	t = clock();
-	s->img_data = ft_run_kernel(s, &s->s, s->img_data);
+	s->img_data = *gpu() ? ft_run_kernel(s, &s->s, ft_memset(s->img_data, 0, sizeof(char) * HGT * WDT * 4)) : ft_mandelbrot(ft_memset(s->img_data, 0, sizeof(char) * HGT * WDT * 4), s->draw.palette, &s->draw);
 	mlx_put_image_to_window(s, s->mlx_win, s->img_ptr, 0, 0);
 	t = clock() - t;
-	time = ((double)t) / CLOCKS_PER_SEC;
+	time = (((double)t) / CLOCKS_PER_SEC);
 	if (s->hud == true)
 		ft_hud(param, time, s->draw.maxiterations);
 	s->draw.scale = (s->draw.maxre - s->draw.minre) *
