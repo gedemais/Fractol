@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/24 16:59:52 by gedemais          #+#    #+#             */
-/*   Updated: 2019/06/08 15:59:58 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/06/10 19:27:50 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,10 @@
 void		ft_print_fps(t_mlx *s, double time)
 {
 	char	*tim;
+	int		fps;
 
-	if (!(tim = ft_itoa((int)(1 / time) * 2)))
+	fps = (1 / time) * (*gpu ? 0.1 : 2);
+	if (!(tim = ft_itoa(fps)))
 		return ;
 	mlx_string_put(s->mlx_ptr, s->mlx_win, 10, 10, 0xFFFFFF, "FPS : ");
 	mlx_string_put(s->mlx_ptr, s->mlx_win, 65, 10, 0xFFFFFF, tim);

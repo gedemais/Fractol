@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/29 13:07:34 by gedemais          #+#    #+#             */
-/*   Updated: 2019/06/08 15:53:13 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/06/10 21:00:24 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,14 @@ double	*julia_y(void)
 	return (&y);
 }
 
-int	*gpu(void)
+int		*gpu(void)
 {
 	static int	val = 0;
 
 	return (&val);
 }
 
-int	ft_screen_size(void)
+int		ft_screen_size(void)
 {
 	static int	val = HGT * WDT * sizeof(int);
 

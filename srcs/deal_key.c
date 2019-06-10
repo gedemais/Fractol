@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 18:39:36 by gedemais          #+#    #+#             */
-/*   Updated: 2019/06/09 18:11:36 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/06/10 22:46:38 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,24 +35,24 @@ void	ft_place_bounds(void *param, int mask)
 {
 	if (mask == MANDELBROT)
 	{
-		((t_mlx*)param)->draw.maxre = 1.865057;
-		((t_mlx*)param)->draw.minre = -2.198335;
-		((t_mlx*)param)->draw.maxim = 1.146398;
-		((t_mlx*)param)->draw.minim = -1.255923;
+		((t_mlx*)param)->draw.maxre = 1.86;
+		((t_mlx*)param)->draw.minre = -2.19;
+		((t_mlx*)param)->draw.maxim = 1.14;
+		((t_mlx*)param)->draw.minim = -1.15;
 	}
 	else if (mask == JULIA)
 	{
 		((t_mlx*)param)->draw.maxre = 1.957858;
 		((t_mlx*)param)->draw.minre = -1.979132;
 		((t_mlx*)param)->draw.maxim = 1.146398;
-		((t_mlx*)param)->draw.minim = -1.227841;
+		((t_mlx*)param)->draw.minim = -1.11841;
 	}
 	else if (mask == BURNINGSHIP)
 	{
 		((t_mlx*)param)->draw.maxre = 1.910770;
 		((t_mlx*)param)->draw.maxim = 1.146398;
 		((t_mlx*)param)->draw.minre = -2.152622;
-		((t_mlx*)param)->draw.minim = -0.759259;
+		((t_mlx*)param)->draw.minim = -0.659259;
 	}
 }
 
@@ -83,7 +83,7 @@ int		ft_keys_tree(void *param, int key)
 	else if (key == 34)
 		s->draw.maxiterations++;
 	else if (key == 8)
-		s->draw.palette = (s->draw.palette < NB_PALETTES) ? s->draw.palette + 1 : 0;
+		s->draw.palette = (s->draw.palette < NB_C) ? s->draw.palette + 1 : 0;
 	else if (key == 4)
 		s->hud = (s->hud == false) ? true : false;
 	else if (key == 0)
@@ -112,7 +112,9 @@ int		ft_deal_key(int key, void *param)
 	if (ft_keys_tree(param, key) == 0)
 		return (1);
 	t = clock();
-	s->img_data = *gpu() ? ft_run_kernel(s, &s->s, s->img_data) : ft_mandelbrot(ft_memset(s->img_data, 0, ft_screen_size()), s->draw.palette, &s->draw);
+	s->img_data = *gpu() ? ft_run_kernel(s, &s->s, s->img_data) :
+	ft_mandelbrot(ft_memset(s->img_data, 0, ft_screen_size()),
+		s->draw.palette, &s->draw);
 	mlx_put_image_to_window(s, s->mlx_win, s->img_ptr, 0, 0);
 	t = clock() - t;
 	time = (((double)t) / CLOCKS_PER_SEC);

@@ -37,24 +37,16 @@ typedef struct	s_fract
 
 ////////////////// Prototypes //////////////////
 
-inline double		ft_sq(double nb);
-inline double		ft_abs(double nb);
-inline void		ft_fill_pixel(__global char *img, int x, int y, int color, int wdt);
-inline int		ft_check(t_complex *c, t_complex *z);
+inline double	ft_abs(double nb);
 inline int		ft_palette_one(int n, int max, bool p);
 inline int		ft_palette_two(int n, int max, bool p);
 inline int		ft_palette_three(int n, int max, bool p);
 inline int		ft_palette_four(int n, int max, bool p);
 inline int		ft_palette_five(int n, int max, bool p);
 inline int		ft_palette_tree(int n, int max, int palette, bool psychedelic);
-inline double		ft_fractals_tree(t_fract *s, const int mask, const char w, const float juliax, const float juliay);
+inline double	ft_fractals_tree(t_fract *s, const int mask, const char w, const float juliax, const float juliay);
 
 ////////////////// Fonctions maths //////////////////
-
-inline double	ft_sq(double nb)
-{
-	return (nb * nb);
-}
 
 inline double	ft_abs(double nb)
 {
@@ -169,7 +161,7 @@ inline int		ft_palette_tree(int n, int max, int palette, bool psychedelic)
 	s.z_im2 = s.z_im * s.z_im;\
 	if (s.z_re2 + s.z_im2 > 4)\
 	{\
-		*((int*)&buff[((s.y - 1) * wdt + s.x) * 4]) = ft_palette_tree(s.n, s.maxiterations, palette, p);\
+		buff[((s.y - 1) * wdt + s.x)] = ft_palette_tree(s.n, s.maxiterations, palette, p);\
 		return ;\
 	}\
 	s.z_im = ft_fractals_tree(&s, mask, 'x', julia_x, julia_x);\
@@ -177,7 +169,7 @@ inline int		ft_palette_tree(int n, int max, int palette, bool psychedelic)
 	s.n++;\
 }while (0);
 
-__kernel void fractol(__global char *buff, int wdt, int hgt, t_fract s, int palette, int p, int mask, float julia_x, float julia_y)
+__kernel void fractol(__global int *buff, int wdt, int hgt, t_fract s, int palette, int p, int mask, float julia_x, float julia_y)
 {
 	int	i;
 
@@ -213,5 +205,5 @@ __kernel void fractol(__global char *buff, int wdt, int hgt, t_fract s, int pale
 		ITER
 		ITER
 	}
-	*((int*)&buff[((s.y - 1) * wdt + s.x) * 4]) = 0;
+	buff[((s.y - 1) * wdt + s.x)] = 0;
 }

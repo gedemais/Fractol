@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 18:50:26 by gedemais          #+#    #+#             */
-/*   Updated: 2019/06/08 15:52:01 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/06/10 22:08:45 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,9 @@ int		ft_pos(int x, int y, void *param)
 	t = clock();
 	*julia_x() = (x - WDT) / (double)WDT;
 	*julia_y() = (y - HGT) / (double)HGT;
-	s->img_data = *gpu() ? ft_run_kernel(s, &s->s, s->img_data) : ft_mandelbrot(ft_memset(s->img_data, 0, ft_screen_size()), s->draw.palette, &s->draw);
+	s->img_data = *gpu() ? ft_run_kernel(s, &s->s, s->img_data) :
+		ft_mandelbrot(ft_memset(s->img_data, 0, ft_screen_size()),
+			s->draw.palette, &s->draw);
 	mlx_put_image_to_window((t_mlx*)param, ((t_mlx*)param)->mlx_win,
 		((t_mlx*)param)->img_ptr, 0, 0);
 	t = clock() - t;
@@ -65,20 +67,18 @@ int		ft_press(int button, int x, int y, void *param)
 	t_mlx			*s;
 	clock_t			t;
 	double			time;
-	double			ratio_x;
-	double			ratio_y;
 
 	s = ((t_mlx*)param);
-	ratio_x = (double)((double)x / WDT);
-	ratio_y = (double)((double)y / HGT);
 	if ((button == 1 || button == 4))
-		ft_zoom(param, ratio_x, ratio_y);
+		ft_zoom(param, ((double)x / WDT), ((double)y / HGT));
 	else if (button == 2 && s->draw.mask == JULIA)
 		s->julia_m = (s->julia_m) ? false : true;
-	else if ((button == 5) && s->draw.maxiterations > 30)
-		ft_dezoom(param, ratio_x, ratio_y);
+	else if ((button == 5) && s->draw.maxiterations > 20)
+		ft_dezoom(param, ((double)x / WDT), ((double)y / HGT));
 	t = clock();
-	s->img_data = *gpu() ? ft_run_kernel(s, &s->s, s->img_data) : ft_mandelbrot(ft_memset(s->img_data, 0, ft_screen_size()), s->draw.palette, &s->draw);
+	s->img_data = *gpu() ? ft_run_kernel(s, &s->s, s->img_data) :
+		ft_mandelbrot(ft_memset(s->img_data, 0, ft_screen_size()),
+			s->draw.palette, &s->draw);
 	mlx_put_image_to_window((t_mlx*)param, s->mlx_win, s->img_ptr, 0, 0);
 	t = clock() - t;
 	time = ((double)t) / CLOCKS_PER_SEC;

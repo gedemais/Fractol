@@ -6,7 +6,7 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/20 18:43:03 by gedemais          #+#    #+#             */
-/*   Updated: 2019/06/08 20:53:28 by gedemais         ###   ########.fr       */
+/*   Updated: 2019/06/10 22:13:58 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 int		ft_set_env(t_mlx *env)
 {
 	env->draw.scale = 2;
+	env->draw.ascale = 0.1;
 	env->hud = true;
 	env->julia_m = false;
 	env->automatic = false;
@@ -47,7 +48,12 @@ int		ft_fractol(char *name)
 		return (-1);
 	*gpu() = 0;
 	env.draw.palette = 0;
-	env.img_data = *gpu() ? ft_run_kernel(&env, &env.s, ft_memset(env.img_data, 0, sizeof(char) * HGT * WDT * 4)) : ft_mandelbrot(ft_memset(env.img_data, 0, sizeof(char) * HGT * WDT * 4), env.draw.palette, &env.draw);
+	if (*gpu())
+		env.img_data = ft_run_kernel(&env, &env.s, ft_memset(env.img_data, 0,
+			ft_screen_size()));
+	else
+		env.img_data = ft_mandelbrot(ft_memset(env.img_data, 0,
+			ft_screen_size()), env.draw.palette, &env.draw);
 	mlx_put_image_to_window(&env, env.mlx_win, env.img_ptr, 0, 0);
 	mlx_hook(env.mlx_win, KEY_PRESS, KEY_PRESS_MASK, ft_deal_key, &env);
 	mlx_hook(env.mlx_win, 4, (1L << 2), ft_press, &env);
