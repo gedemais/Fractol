@@ -27,6 +27,7 @@ char	*ft_read(int fd)
 
 int		ft_init_opencl(t_opencl *s, char *img)
 {
+	void	*mem;
 	char	*source;
 	int	fd;
 	cl_int	ret;
@@ -54,7 +55,7 @@ int		ft_init_opencl(t_opencl *s, char *img)
 		ft_putstr_fd("Failed to create kernel\n", 2);
 		return (-1);
 	}
-	s->buffer = clCreateBuffer(s->context, CL_MEM_READ_WRITE, ((HGT * WDT) * 4), NULL, NULL); // Cree un objet memoire dans le GPU
+	s->buffer = clCreateBuffer(s->context, CL_MEM_WRITE_ONLY, ft_screen_size(), NULL, NULL); // Cree un objet memoire dans le GPU
 	return (0);
 }
 
@@ -82,7 +83,7 @@ char	*ft_run_kernel(t_mlx *env, t_opencl *s, char *img)
 	clSetKernelArg(s->kernel, 7, sizeof(float), (void*)&juliax);
 	clSetKernelArg(s->kernel, 8, sizeof(float), (void*)&juliay);
 	clEnqueueNDRangeKernel(s->queue, s->kernel, 2, NULL, global_dimensions, NULL, 0, NULL, NULL);
-	if (clEnqueueReadBuffer(s->queue, s->buffer, CL_FALSE, 0, (HGT * WDT) * 4, img, 0, NULL, NULL) != CL_SUCCESS)
+	if (clEnqueueReadBuffer(s->queue, s->buffer, CL_FALSE, 0, ft_screen_size(), img, 0, NULL, NULL) != CL_SUCCESS)
 	{
 		ft_putstr_fd("Copy from GPU failed\n", 2);
 		return (NULL);

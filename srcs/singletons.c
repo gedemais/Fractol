@@ -32,3 +32,10 @@ int	*gpu(void)
 
 	return (&val);
 }
+
+int	ft_screen_size(void)
+{
+	static int	val = HGT * WDT * sizeof(int);
+
+	return (val);
+}

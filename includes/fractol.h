@@ -159,6 +159,7 @@ int				ft_pos(int x, int y, void *param);
 double			*julia_x(void);
 double			*julia_y(void);
 int			*gpu(void);
+int			ft_screen_size(void);
 
 int				ft_init_opencl(t_opencl *s, char *img);
 char				*ft_run_kernel(t_mlx *env, t_opencl *s, char *img);

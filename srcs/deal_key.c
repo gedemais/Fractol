@@ -28,7 +28,7 @@ void	ft_arrows(void *param, int key, double scale)
 		((t_mlx*)param)->draw.minim += 0.01 * scale;
 	else if (key == 126)
 		((t_mlx*)param)->draw.minim -= 0.01 * scale;
-	ft_memset(((t_mlx*)param)->img_data, 0, HGT * WDT * 4);
+	ft_memset(((t_mlx*)param)->img_data, 0, ft_screen_size());
 }
 
 void	ft_place_bounds(void *param, int mask)
@@ -67,7 +67,7 @@ int		ft_switch_fractal(void *param, int mask)
 	else
 		return (0);
 	ft_place_bounds(param, mask);
-	ft_memset(((t_mlx*)param)->img_data, 0, HGT * WDT * 4);
+	ft_memset(((t_mlx*)param)->img_data, 0, ft_screen_size());
 	return (mask);
 }
 
@@ -112,7 +112,7 @@ int		ft_deal_key(int key, void *param)
 	if (ft_keys_tree(param, key) == 0)
 		return (1);
 	t = clock();
-	s->img_data = *gpu() ? ft_run_kernel(s, &s->s, ft_memset(s->img_data, 0, sizeof(char) * HGT * WDT * 4)) : ft_mandelbrot(ft_memset(s->img_data, 0, sizeof(char) * HGT * WDT * 4), s->draw.palette, &s->draw);
+	s->img_data = *gpu() ? ft_run_kernel(s, &s->s, s->img_data) : ft_mandelbrot(ft_memset(s->img_data, 0, ft_screen_size()), s->draw.palette, &s->draw);
 	mlx_put_image_to_window(s, s->mlx_win, s->img_ptr, 0, 0);
 	t = clock() - t;
 	time = (((double)t) / CLOCKS_PER_SEC);

@@ -50,8 +50,7 @@ int		ft_pos(int x, int y, void *param)
 	t = clock();
 	*julia_x() = (x - WDT) / (double)WDT;
 	*julia_y() = (y - HGT) / (double)HGT;
-	ft_memset(((t_mlx*)param)->img_data, 0, HGT * WDT * 4);
-	s->img_data = ft_run_kernel(s, &s->s, s->img_data);
+	s->img_data = *gpu() ? ft_run_kernel(s, &s->s, s->img_data) : ft_mandelbrot(ft_memset(s->img_data, 0, ft_screen_size()), s->draw.palette, &s->draw);
 	mlx_put_image_to_window((t_mlx*)param, ((t_mlx*)param)->mlx_win,
 		((t_mlx*)param)->img_ptr, 0, 0);
 	t = clock() - t;
@@ -79,7 +78,7 @@ int		ft_press(int button, int x, int y, void *param)
 	else if ((button == 5) && s->draw.maxiterations > 30)
 		ft_dezoom(param, ratio_x, ratio_y);
 	t = clock();
-	s->img_data = *gpu() ? ft_run_kernel(s, &s->s, ft_memset(s->img_data, 0, sizeof(char) * HGT * WDT * 4)) : ft_mandelbrot(ft_memset(s->img_data, 0, sizeof(char) * HGT * WDT * 4), s->draw.palette, &s->draw);
+	s->img_data = *gpu() ? ft_run_kernel(s, &s->s, s->img_data) : ft_mandelbrot(ft_memset(s->img_data, 0, ft_screen_size()), s->draw.palette, &s->draw);
 	mlx_put_image_to_window((t_mlx*)param, s->mlx_win, s->img_ptr, 0, 0);
 	t = clock() - t;
 	time = ((double)t) / CLOCKS_PER_SEC;
