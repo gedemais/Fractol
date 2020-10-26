@@ -6,15 +6,15 @@
 /*   By: gedemais <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/20 18:50:23 by gedemais          #+#    #+#             */
-/*   Updated: 2019/06/10 22:47:32 by gedemais         ###   ########.fr       */
+/*   Updated: 2020/10/26 21:12:24 by gedemais         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FRACTOL_H
 # define FRACTOL_H
 
-# define HGT 1080
-# define WDT 1920
+# define HGT 720
+# define WDT 1280
 # define KEY_PRESS 2
 # define KEY_PRESS_MASK (1L<<0)
 # define ITER_BASE 30
@@ -30,7 +30,7 @@
 
 # include "../libft/libft.h"
 # include "mlx.h"
-# include "/System/Library/Frameworks/OpenCL.framework/Versions/A/Headers/cl.h"
+# include "/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/OpenCL.framework/Versions/A/Headers/cl.h"
 # include <stdbool.h>
 # include <pthread.h>
 

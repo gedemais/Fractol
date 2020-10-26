@@ -6,7 +6,7 @@
 #    By: gedemais <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/20 18:40:16 by gedemais          #+#    #+#              #
-#    Updated: 2019/06/10 22:25:29 by gedemais         ###   ########.fr        #
+#    Updated: 2020/10/26 21:10:53 by gedemais         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,7 +61,7 @@ all : $(MLX_PATH) $(LIB) $(NAME) $(INC)
 
 $(NAME) : $(MLX) $(INC) $(LIB_PATH) $(SRCS)
 	@echo "Making $(RED)fractol_du_sale...$(DEF)"
-	@$(CC) $(FLAGS) $(OFLAGS) -o $(NAME) -I minilibx_macos/ $(SRCS) -L minilibx_macos/ minilibx_macos/libmlx.a -framework OpenGL -framework OpenCL -framework AppKit -lpthread $(LIB)
+	@$(CC) $(FLAGS) $(OFLAGS) -o $(NAME) -Iminilibx_macos/ $(SRCS) -Lminilibx_macos/ minilibx_macos/libmlx.a -framework OpenGL -framework OpenCL -framework AppKit -lpthread $(LIB)
 	@echo "$(GRE)Done !$(DEF)"
 
 $(LIB) :
